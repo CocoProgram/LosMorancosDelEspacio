@@ -11,7 +11,7 @@ unsigned char fps=25;
 
 const int kWindowX = 768, kWindowY = 576;
 
-
+enum GamePhase { kGamePhase_Menu, kGamePhase_InGame, kGamePhase_EndGame };
 
 double current_time,last_time;
 
