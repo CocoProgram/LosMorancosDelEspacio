@@ -1,4 +1,4 @@
-int CollisionPlayer(Tplayer player, Tmapa mapa){
+int CollisionPlayer(TPlayer player, Tmapa mapa){
   //De abajo a arriba
   if(player.posy<mapa.posy+esat::SpriteHeight(mapa.platform_sprites)&&
   player.posy>mapa.posy&&
