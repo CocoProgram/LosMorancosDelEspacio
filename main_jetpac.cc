@@ -50,7 +50,7 @@ TMapa *str_mapa;
 struct TPlayer{
   float posx, posy;
   esat::SpriteHandle *player_sprites; //Pasar a puntero, son 16
-  bool is_flying, is_alive;
+  bool is_flying=true, is_alive;
   bool shoot;
   char vida = 5;
   float jetpac;
@@ -104,10 +104,65 @@ void TimeInFps(){
 	if(fps_counter == fps) {seg_counter++;}
 }
 
+void PlayerFlying(TPlayer *player){
 
+  if (player->is_flying) {
+      player->posy+=player->jetpac;
+      if (player->jetpac<=-6){
+        player->jetpac=-6;
+      }
+      if (player->jetpac>=3){
+        player->jetpac=3;
+      }
+  } else {
+    player->jetpac=0;
+  }
+
+  if (g_jetpac){
+    player->jetpac-=0.25;
+  }else if (player->is_flying){
+    player->jetpac+=0.25;
+  }
+}
+
+void PlayerMovement(TPlayer *player){
+
+  if(g_left){
+
+    player->speed_walk-=0.25;
+  }else{
+
+    if(player->speed_walk<0){
+      player->speed_walk+=0.25;
+    }
+  }
+
+  if(g_right){
+
+    player->speed_walk+=0.25;
+  }else{
+
+    if(player->speed_walk>0){
+      player->speed_walk-=0.25;
+    }
+  }
+
+  if(player->speed_walk>=4){
+
+    player->speed_walk=4;
+  }
+
+  if(player->speed_walk<=-4){
+
+    player->speed_walk=-4;
+  }
+
+  player->posx+=player->speed_walk;
+}
 
 void PreMemorySaved(){
   str_mapa = (TMapa*) calloc (4, sizeof(TMapa));
+  str_player.player_sprites = (esat::SpriteHandle*) calloc (8, sizeof(esat::SpriteHandle));
 }   //RESERVAR AQUÍ MEMORIA DE PUNTEROS AMORES
 void FreeMemorySaved(){
  free(str_mapa);
@@ -126,6 +181,16 @@ void LoadSprites() {
   (*(str_mapa + 1)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Plataforma_Media.png");
   (*(str_mapa + 2)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Plataforma_Pequenya.png");
   (*(str_mapa + 3)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Plataforma_Grande.png");
+
+  /*PLAYER*/
+  *(str_player.player_sprites) = esat::SpriteFromFile("./resources/Sprites/Astronauta_walk_0.png");
+  *((str_player.player_sprites)+1) = esat::SpriteFromFile("./resources/Sprites/Astronauta_walk_1.png");
+  *((str_player.player_sprites)+2) = esat::SpriteFromFile("./resources/Sprites/Astronauta_walk_2.png");
+  *((str_player.player_sprites)+3) = esat::SpriteFromFile("./resources/Sprites/Astronauta_walk_3.png");
+  *((str_player.player_sprites)+4) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_0.png");
+  *((str_player.player_sprites)+5) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_1.png");
+  *((str_player.player_sprites)+6) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_2.png");
+  *((str_player.player_sprites)+7) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_3.png");
 }   //CARGAR AQUÍ SPRITES CHICAS
 void SpritesRelease() {
  /* M A P A */
@@ -133,6 +198,16 @@ void SpritesRelease() {
  esat::SpriteRelease((*(str_mapa + 1)).platform_sprites);
  esat::SpriteRelease((*(str_mapa + 2)).platform_sprites);
  esat::SpriteRelease((*(str_mapa + 3)).platform_sprites);
+
+ /*PLAYER*/
+ esat::SpriteRelease(*(str_player.player_sprites));
+ esat::SpriteRelease(*((str_player.player_sprites)+1));
+ esat::SpriteRelease(*((str_player.player_sprites)+2));
+ esat::SpriteRelease(*((str_player.player_sprites)+3));
+ esat::SpriteRelease(*((str_player.player_sprites)+4));
+ esat::SpriteRelease(*((str_player.player_sprites)+5));
+ esat::SpriteRelease(*((str_player.player_sprites)+6));
+ esat::SpriteRelease(*((str_player.player_sprites)+7));
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
   /* M A P A */
@@ -140,7 +215,17 @@ void DrawingSprites(){
  esat::DrawSprite((*(str_mapa + 1)).platform_sprites, (*(str_mapa + 1)).posx , (*(str_mapa + 1)).posy );
  esat::DrawSprite((*(str_mapa + 2)).platform_sprites, (*(str_mapa + 2)).posx , (*(str_mapa + 2)).posy);
  esat::DrawSprite((*(str_mapa + 3)).platform_sprites, (*(str_mapa + 3)).posx , (*(str_mapa + 3)).posy );
+
+  /*PLAYER*/
+
+ esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
 }  //VAMOH A DIBUJAR
+
+void PlayerFunctions(){
+
+  PlayerFlying(&str_player);
+  PlayerMovement(&str_player);
+}
 
 void InitializeParametres(){
  /* M A P A */
@@ -149,7 +234,9 @@ void InitializeParametres(){
  (*(str_mapa + 2)).posx = 363;   (*(str_mapa + 2)).posy = 292;
  (*(str_mapa + 3)).posx = 580;   (*(str_mapa + 3)).posy = 147;
 
-
+ /*PLAYER*/
+ str_player.posx=500;   str_player.posy=500;  str_player.phase_animation=0;
+ str_player.speed_walk=0;
 
 } //INICIAR TODAS LAS VARIABLES AQUÍ ANTES DEL BUCLE WHILE
 
@@ -172,6 +259,7 @@ int esat::main(int argc, char **argv) {
       TimeInFps();
 
 			BoleanasTeclas();
+      PlayerFunctions();
       DrawingSprites();
 
     	esat::DrawEnd();
