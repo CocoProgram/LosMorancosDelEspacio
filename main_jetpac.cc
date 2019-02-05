@@ -101,7 +101,7 @@ void TimeInFps(){
   /* Contamos los fps que trascurren y cuando llegan al máximo,
   60, se resetea a 0, servirá para hacer transiciones entre animaciones.*/
  fps_counter == fps ? fps_counter = 0 : fps_counter++;
-	if(fps_counter == fps) {seg_counter++);
+	if(fps_counter == fps) {seg_counter++};
 }
 
 
