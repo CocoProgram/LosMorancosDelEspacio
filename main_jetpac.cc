@@ -10,6 +10,7 @@
 unsigned char fps = 60; //fps que trascurren en un segundo.
 double current_time,last_time;
 unsigned char fps_counter = 0; //cuenta los fps que trascurren en un segundo.
+unsigned char seg_counter = 0;
 
 const int kWindowX = 768, kWindowY = 576;
 
@@ -100,15 +101,16 @@ void TimeInFps(){
   /* Contamos los fps que trascurren y cuando llegan al máximo,
   60, se resetea a 0, servirá para hacer transiciones entre animaciones.*/
  fps_counter == fps ? fps_counter = 0 : fps_counter++;
+	if(fps_counter == fps) {seg_counter++);
 }
 
 
 
 void PreMemorySaved(){
-
+  str_mapa = (TMapa*) calloc (4, sizeof(TMapa));
 }   //RESERVAR AQUÍ MEMORIA DE PUNTEROS AMORES
 void FreeMemorySaved(){
-
+ free(str_mapa);
 }  //LIBERAR MEMORIA DE PUNTEROS AQUÍ JOSPDEPUTAS.
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
@@ -119,16 +121,33 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
 }
 
 void LoadSprites() {
-
+  /* M A P A */
+  (*str_mapa).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Suelo_Centro.png");
+  (*(str_mapa + 1)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Suelo_Centro.png");
+  (*(str_mapa + 2)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Suelo_Centro.png");
+  (*(str_mapa + 3)).platform_sprites = esat::SpriteFromFile("./resources/Sprites/Suelo_Centro.png");
 }   //CARGAR AQUÍ SPRITES CHICAS
 void SpritesRelease() {
-
+ /* M A P A */
+ esat::SpriteRelease((*str_mapa).platform_sprites);
+ esat::SpriteRelease((*(str_mapa + 1)).platform_sprites);
+ esat::SpriteRelease((*(str_mapa + 2)).platform_sprites);
+ esat::SpriteRelease((*(str_mapa + 3)).platform_sprites);
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
-
+  /* M A P A */
+ esat::DrawSprite((*str_mapa).platform_sprites, (*str_mapa).posx, (*str_mapa).posy);
+ esat::DrawSprite((*(str_mapa + 1)).platform_sprites, (*(str_mapa + 1)).posx , (*(str_mapa + 1)).posy );
+ esat::DrawSprite((*(str_mapa + 2)).platform_sprites, (*(str_mapa + 2)).posx , (*(str_mapa + 2)).posy);
+ esat::DrawSprite((*(str_mapa + 3)).platform_sprites, (*(str_mapa + 3)).posx , (*(str_mapa + 3)).posy );
 }  //VAMOH A DIBUJAR
 
 void InitializeParametres(){
+ /* M A P A */
+ (*str_mapa).posx = 0;           (*str_mapa).posy = 450;
+ (*(str_mapa + 1)).posx = 100;   (*(str_mapa + 1)).posy = 200;
+ (*(str_mapa + 2)).posx = 300;   (*(str_mapa + 2)).posy = 250;
+ (*(str_mapa + 3)).posx = 500;   (*(str_mapa + 3)).posy = 150;
 
 
 
@@ -137,11 +156,12 @@ void InitializeParametres(){
 
 
 int esat::main(int argc, char **argv) {
+	esat::WindowInit(kWindowX,kWindowY);
+
   PreMemorySaved();
   InitializeParametres();
   LoadSprites();
 
-	esat::WindowInit(kWindowX,kWindowY);
 	WindowSetMouseVisibility(true);
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
