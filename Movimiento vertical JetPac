@@ -1,25 +1,20 @@
-void Flying(Tplayer *player, float *gravity){
+void Flying(Tplayer *player){
 
-	if (g_jetpac) { //Pulsamos espacio
-		*gravity = 1.0f; //Reinicia gravedad
-		if (player->jetpac<8.0){//Controla el aumento de velocidad
-			*propulsion+=0.25;
-		}
-		player->posy -= player->jetpac;//Hace que el player suba
+	if (player->isFlying) {
+			player->posy+=player->jetpac;
+			if (player->jetpac<=-8){
+				player->jetpac=-8;
+			}
+			if (player->jetpac>=3){
+				player->jetpac=3;
+			}
+	} else {
+		player->jetpac=0;
 	}
 
-	else if (!g_jetpac && player->posY < kWindowY) {//Si no pulsamos espacio y estamos por encima del final de abajo
-		if (player->jetpac>0){//seguimos subiendo un poco si estabamos subiendo
-			player->jetpac=0.25;
-			player->posy -= player->jetpac;
-		}else{//Para luego bajar
-			if (*gravity<3){
-				*gravity+=0.25;
-			}
-			player->posy+=*gravity;
-		}
-		if (player->posy>kWindowY){
-			player->posy=kWindowY;
-		}
+	if (g_jetpac){
+		player->jetpac-=0.25;
+	}else if (player->isFlying){
+		player->jetpac+=0.25;
 	}
 }
