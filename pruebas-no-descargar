@@ -164,6 +164,31 @@ int esat::main(int argc, char **argv) {
   }
   FreeMemorySaved();
   SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+   FreeMemorySaved();
+  SpritesRelease();
+  
 
   esat::WindowDestroy();
 
