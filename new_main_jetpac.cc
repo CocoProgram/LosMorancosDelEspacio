@@ -14,6 +14,86 @@ unsigned char seg_counter = 0;
 
 const int kWindowX = 768, kWindowY = 576;
 
+enum GamePhase { kGamePhase_Menu = 0,
+                 kGamePhase_InGame,
+                 kGamePhase_EndGame,
+	       	 kGamePhase_Intro};
+
+enum EnemyTypes { kEnemyTypes_0 = 0,
+                  kEnemyTypes_1,
+                  kEnemyTypes_2,
+                  kEnemyTypes_3,
+                  kEnemyTypes_4,
+                  kEnemyTypes_5,
+                  kEnemyTypes_6,
+                  kEnemyTypes_7 };
+
+enum NaveType { kNaveType_0 = 0,
+                kNaveType_1,
+                kNaveType_2,
+                kNaveType_3 };
+
+enum BonusType { kBonusType_0 = 0,
+                 kBonusType_1,
+                 kBonusType_2,
+                 kBonusType_3 };
+
+struct TMapa{
+  int posx, posy;
+  esat::SpriteHandle platform_sprites;
+};
+TMapa *str_mapa;
+
+struct TPlayer{
+  float posx, posy;
+  esat::SpriteHandle *player_sprites; //Pasar a puntero, son 16
+  bool is_flying, is_alive;
+  bool shoot;
+  char vida = 5;
+  float jetpac;
+  double score;
+  int phase_animation;
+  float speed_walk;
+};
+TPlayer str_player;
+
+struct TShoot {
+  float posx, posy;
+  //Metodo de dibujado desconocido.
+ float distance_max;
+ bool collision;
+};
+TShoot *str_shoot;
+
+struct TEnemy {
+  float posx, posy;
+  esat:: SpriteHandle enemy_sprites;
+  EnemyTypes enemy_type;
+  bool is_alive;
+  float speedx, speedy;
+  int points;
+  char colour;
+  int phase_animation;
+};
+TEnemy str_enemy;
+
+struct TBonus {
+  float posx, posy;
+  esat::SpriteHandle bonus_sprite;
+  int points;
+  BonusType bonus_type;
+  bool is_alive;
+};
+TBonus str_bonus;
+
+struct TNave {
+  float posx, posy;
+  esat::SpriteHandle nave_sprites; //puntero con numero de piezas
+  int fuel_level;
+  NaveType nave_type;
+};
+TNave *str_nave;
+
 bool g_right, g_left, g_jetpac, g_shoot;
 float g_gravity;
 
