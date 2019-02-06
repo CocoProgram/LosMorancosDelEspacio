@@ -18,6 +18,10 @@ enum GamePhase { kGamePhase_Menu = 0,
                  kGamePhase_InGame,
                  kGamePhase_EndGame,
 	       	 kGamePhase_Intro};
+GamePhase phase = kGamePhase_Intro;
+
+enum GameMode { OnePlayer, TwoPlayers, NoneSelected};
+GameMode mode = NoneSelected;
 
 enum EnemyTypes { kEnemyTypes_0 = 0,
                   kEnemyTypes_1,
@@ -97,12 +101,24 @@ TNave *str_nave;
 bool g_right, g_left, g_jetpac, g_shoot;
 float g_gravity;
 
+double g_HiScore = 0;
+bool g_keyboardSelected = true; // bool de control para el menú
+esat::SpriteHandle s_vida, *s_intro; // sprites para la intro y vida del jugador;
+
+//Variables para hacer ITOA de Puntuaciones y Vidas:
+char *g_write_player1score, *g_write_player2score, *g_write_hi, *g_write_player1lives;
+
+//Punteros de floats para hacer: Draw Solid Path de las "cajas" blancas del menú:
+float *g_white_box1, *g_white_box2, *g_white_box3;
+
 void TimeInFps(){
   /* Contamos los fps que trascurren y cuando llegan al máximo,
   60, se resetea a 0, servirá para hacer transiciones entre animaciones.*/
  fps_counter == fps ? fps_counter = 0 : fps_counter++;
 	if(fps_counter == fps) {seg_counter++;}
 }
+
+#include "pablo.cc"
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
@@ -112,17 +128,21 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
 }
 
 void PreMemorySaved(){
-
+	MemoryForInterface();
 }
 void FreeMemorySaved(){
+	FreeMemoryForInterface();
+}
 
+void InitializeParametres() {
+  InitInterfaceParametres();
 }
 
 void LoadSprites(){
-
+	LoadInterfaceSprites();
 }
 void SpritesRelease() {
-
+	ReleaseSpritesForInterface();
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
 
@@ -131,7 +151,9 @@ void DrawingSprites(){
 
 int esat::main(int argc, char **argv) {
 	esat::WindowInit(kWindowX,kWindowY);
+  PreMemorySaved();
   LoadSprites();
+  InitializeParametres();;
   
 	WindowSetMouseVisibility(true);
 
@@ -140,10 +162,27 @@ int esat::main(int argc, char **argv) {
     	last_time = esat::Time();
     	esat::DrawBegin();
     	esat::DrawClear(0,0,0);
-      TimeInFps();
+        TimeInFps();
+	
+	PrintScore();
 
-			BoleanasTeclas();
-      DrawingSprites();
+	      switch ( phase ){
+		case kGamePhase_Menu:
+		  PrintMenu();
+		  break;
+
+		case kGamePhase_Intro:
+		  PrintIntro();
+		  break;
+
+		case kGamePhase_InGame:
+		  BoleanasTeclas();
+		  DrawingSprites();
+		  break;
+
+		case kGamePhase_EndGame:
+		  break;
+	      }    
 
     	esat::DrawEnd();
 
