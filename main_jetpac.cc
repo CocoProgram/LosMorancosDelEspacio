@@ -50,7 +50,7 @@ TMapa *str_mapa;
 struct TPlayer{
   float posx, posy;
   esat::SpriteHandle *player_sprites; //Pasar a puntero, son 16
-  bool is_flying=true, is_alive;
+  bool is_flying, is_alive;
   bool shoot;
   char vida = 5;
   float jetpac;
@@ -107,43 +107,76 @@ void TimeInFps(){
 void PlayerFlying(TPlayer *player){
 
   if (player->is_flying) {
-      player->posy+=player->jetpac;
-      if (player->jetpac<=-6){
-        player->jetpac=-6;
+    player->posy+=player->jetpac;
+      if (player->jetpac<=-5){
+        player->jetpac=-5;
       }
-      if (player->jetpac>=3){
-        player->jetpac=3;
+      if (player->jetpac>=5){
+        player->jetpac=5;
       }
-  } else {
+  }else{
+
     player->jetpac=0;
   }
 
   if (g_jetpac){
     player->jetpac-=0.25;
+
+    if(!player->is_flying){
+
+      player->posy-=0.25;
+      player->is_flying=true;
+    }
   }else if (player->is_flying){
     player->jetpac+=0.25;
   }
 }
 
-void PlayerMovement(TPlayer *player){
+void PlayerMovementLimits(TPlayer *player){
+
+  if(player->posy+esat::SpriteHeight(*((str_player.player_sprites)+str_player.phase_animation))
+    >=(*str_mapa).posy){
+
+    player->is_flying=false;
+    player->posy=(*str_mapa).posy-esat::SpriteHeight(*((str_player.player_sprites)+str_player.phase_animation));
+  }
+
+  if(player->posy<=0){
+
+    player->posy=0.1;
+    player->jetpac=0.5;
+  }
+
+  if(player->posx>kWindowX){
+
+    player->posx=0-esat::SpriteWidth(*((str_player.player_sprites)+str_player.phase_animation));
+  }
+
+  if(player->posx<0-esat::SpriteWidth(*((str_player.player_sprites)+str_player.phase_animation))){
+
+    player->posx=kWindowX;
+  }
+}
+
+void PlayerFlyingMovement(TPlayer *player){
 
   if(g_left){
 
-    player->speed_walk-=0.25;
+    player->speed_walk-=0.2;
   }else{
 
     if(player->speed_walk<0){
-      player->speed_walk+=0.25;
+      player->speed_walk+=0.2;
     }
   }
 
   if(g_right){
 
-    player->speed_walk+=0.25;
+    player->speed_walk+=0.2;
   }else{
 
     if(player->speed_walk>0){
-      player->speed_walk-=0.25;
+      player->speed_walk-=0.2;
     }
   }
 
@@ -155,6 +188,26 @@ void PlayerMovement(TPlayer *player){
   if(player->speed_walk<=-4){
 
     player->speed_walk=-4;
+  }
+
+  player->posx+=player->speed_walk;
+}
+
+void PlayerGroundMovement(TPlayer *player){
+
+  if(g_left){
+
+    player->speed_walk=-3;
+  }
+
+  if(g_right){
+
+    player->speed_walk=3;
+  }
+
+  if(!g_right && !g_left){
+
+    player->speed_walk=0;
   }
 
   player->posx+=player->speed_walk;
@@ -224,7 +277,12 @@ void DrawingSprites(){
 void PlayerFunctions(){
 
   PlayerFlying(&str_player);
-  PlayerMovement(&str_player);
+  if(str_player.is_flying){
+    PlayerFlyingMovement(&str_player);
+  }else{
+    PlayerGroundMovement(&str_player);
+  }
+  PlayerMovementLimits(&str_player);
 }
 
 void InitializeParametres(){
