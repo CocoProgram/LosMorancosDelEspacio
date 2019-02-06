@@ -37,16 +37,21 @@ enum NaveType { kNaveType_0 = 0,
                 kNaveType_2,
                 kNaveType_3 };
 
-enum BonusType { kBonusType_0 = 0,
-                 kBonusType_1,
-                 kBonusType_2,
-                 kBonusType_3 };
+enum BonusType {
+  kBonusType_0 = 0,
+  kBonusType_1,
+  kBonusType_2,
+  kBonusType_3,
+  kBonusType_4
+};
 
 struct TMapa{
   int posx, posy;
   esat::SpriteHandle platform_sprites;
 };
 TMapa *str_mapa;
+#include "platforms.cc"
+
 
 struct TPlayer{
   float posx, posy;
@@ -82,13 +87,16 @@ struct TEnemy {
 TEnemy str_enemy;
 
 struct TBonus {
-  float posx, posy;
+  float posx = 0, posy = 0;
+  BonusType type_bonus;
   esat::SpriteHandle bonus_sprite;
-  int points;
-  BonusType bonus_type;
-  bool is_alive;
+  int points = 250;
+  bool is_alive = false;
+  bool draw_bonus = true;
+  bool coll_bonus = false;
 };
 TBonus str_bonus;
+#include "bonus.cc"
 
 struct TNave {
   float posx, posy;
@@ -129,24 +137,36 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
 
 void PreMemorySaved(){
 	MemoryForInterface();
+	BonusSpriteMemory();
+  PlatformsMemoryReserved();
 }
 void FreeMemorySaved(){
 	FreeMemoryForInterface();
+	BonusFreeMemory();
+  PlatformsFreeMemory();
 }
 
 void InitializeParametres() {
   InitInterfaceParametres();
+	PlatformPositions();	
 }
 
 void LoadSprites(){
 	LoadInterfaceSprites();
+	BonusSpritesLoad();
+  PlaformsLoadSprites();
 }
 void SpritesRelease() {
 	ReleaseSpritesForInterface();
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
-
+BonusSpawn(g_gravity);
+  PlatformsDraw();
 }  //VAMOH A DIBUJAR
+
+void Collisions () {
+  if(str_bonus.coll_bonus == false) { BonusCollision(); }
+}
 
 
 int esat::main(int argc, char **argv) {
@@ -177,7 +197,8 @@ int esat::main(int argc, char **argv) {
 
 		case kGamePhase_InGame:
 		  BoleanasTeclas();
-		  DrawingSprites();
+      		  DrawingSprites();
+     	          Collisions();
 		  break;
 
 		case kGamePhase_EndGame:
