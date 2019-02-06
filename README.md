@@ -1,9 +1,16 @@
 # LosMorancosDelEspacio
 
-Alex & Pablo - Interfaz y Cohete
-JC & Alejandro - Jugador y Disparo
-Luciano & Nacho - Enemigos
-Carlos - Sprites y Bonus
+Alex & Pablo:
+- Interfaz y Cohete
+
+JC & Alejandro:
+- Jugador y Disparo
+
+Luciano & Nacho:
+- Enemigos
+
+Carlos:
+- Sprites y Bonus
 
 TO DO:
 - Niveles
@@ -12,4 +19,3 @@ TO DO:
 - Disparo
 - Animaciones
 - Acabar movimiento jugador
-
