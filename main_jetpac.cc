@@ -213,6 +213,38 @@ void PlayerGroundMovement(TPlayer *player){
   player->posx+=player->speed_walk;
 }
 
+int CollisionPlayer(TPlayer player, TMapa mapa){
+  //De abajo a arriba
+  if(player.posy<mapa.posy+esat::SpriteHeight(mapa.platform_sprites)&&
+  player.posy>mapa.posy&&
+  player.posx+esat::SpriteWidth(*(player.player_sprites+0))>=mapa.posx&&
+  player.posx<=mapa.posx+esat::SpriteWidth(mapa.platform_sprites)){
+    return 1;
+  }
+  //De arriba a abajo
+  else if(player.posy+esat::SpriteHeight(*(player.player_sprites+0))>mapa.posy&&
+  player.posy+esat::SpriteHeight(*(player.player_sprites+0))<mapa.posy+esat::SpriteHeight(mapa.platform_sprites)&&
+  player.posx+esat::SpriteWidth((*(player.player_sprites+0)))>=mapa.posx&&
+  player.posx<=mapa.posx+esat::SpriteWidth(mapa.platform_sprites)){
+    return 2;
+  }//De derecha a Izq
+  else if(player.posx<mapa.posx+esat::SpriteWidth(mapa.platform_sprites)&&
+  player.posx+esat::SpriteWidth((*(player.player_sprites+0)))>mapa.posx+esat::SpriteWidth(mapa.platform_sprites)&&
+  player.posy+esat::SpriteHeight((*(player.player_sprites+0)))>mapa.posy&&
+  player.posy<mapa.posx+esat::SpriteWidth(mapa.platform_sprites)){
+    return 3;
+  }
+  //De Izq a derecha
+  else if(player.posx+esat::SpriteWidth(*(player.player_sprites+0))>mapa.posx&&
+  player.posx<mapa.posx&&
+  player.posy+esat::SpriteHeight((*(player.player_sprites+0)))>mapa.posy&&
+  player.posy<mapa.posx+esat::SpriteWidth(mapa.platform_sprites)){
+    return 4;
+  }
+  //No Colisiona
+  else{return 0;}
+}
+
 void PreMemorySaved(){
   str_mapa = (TMapa*) calloc (4, sizeof(TMapa));
   str_player.player_sprites = (esat::SpriteHandle*) calloc (8, sizeof(esat::SpriteHandle));
@@ -285,6 +317,12 @@ void PlayerFunctions(){
   PlayerMovementLimits(&str_player);
 }
 
+void CollisionFunctions(){
+  for(int i=0;i<=3;i++){
+    CollisionPlayer(str_player,*(str_mapa+i));
+  }
+}
+
 void InitializeParametres(){
  /* M A P A */
  (*str_mapa).posx = 0;           (*str_mapa).posy = 555;
@@ -335,4 +373,3 @@ int esat::main(int argc, char **argv) {
 
   return 0;
 }
-
