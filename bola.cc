@@ -97,7 +97,7 @@ void MovimientoBola(TEnemy *Bola){
 	
 }
 
-void controlPelusa(){
+void controlBola(){
 		
 	for(int i=0;i<4;i++){
 		
