@@ -153,7 +153,7 @@ int esat::main(int argc, char **argv) {
 	esat::WindowInit(kWindowX,kWindowY);
   PreMemorySaved();
   LoadSprites();
-  InitializeParametres();;
+  InitializeParametres();
   
 	WindowSetMouseVisibility(true);
 
