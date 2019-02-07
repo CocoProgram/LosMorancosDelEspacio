@@ -1,7 +1,7 @@
 # AL SUBIR VUESTRO INCLUDE, ACORDARSE DE INCLUIRLO EN EL ARCHIVO MAIN
 # Archivos a incluir ( de momento )
 PRINCIPAL: 
-- new_main_jetpac.cc
+- main_jetpac.cc
 
 INCLUDES:
 - pablo.cc
