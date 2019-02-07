@@ -55,6 +55,8 @@ struct TPlayer{
   char vida = 5;
   float jetpac;
   double score;
+  int direction;
+  int loop;
   int phase_animation;
   float speed_walk;
 };
