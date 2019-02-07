@@ -57,7 +57,7 @@ TMapa *str_mapa;
 struct TPlayer{
   float posx, posy;
   esat::SpriteHandle *player_sprites; //Pasar a puntero, son 16
-  bool is_flying, is_alive;
+  bool is_flying, is_alive = true;
   bool shoot;
   char vida = 5;
   float jetpac;
@@ -175,6 +175,7 @@ void DrawingSprites(){
 
 void Collisions () {
   if(str_bonus.is_alive == true) { BonusCollision(); }
+  if(str_player.is_alive == true) { CollisionPlayer(); }
 }
 
 
