@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <esat/window.h>
-#include <esat/draw.h>
-#include <esat/input.h>
-#include <esat/sprite.h>
-#include <esat/time.h>
+
 
 void MemoryForInterface(){
   g_write_player1score = (char*)malloc(6*sizeof(char));
