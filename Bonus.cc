@@ -60,7 +60,9 @@ void BonusSpawn(float gravedad){
           str_bonus.posx = rand()%727*1.0f;
           str_bonus.is_alive = true;
           str_bonus.draw_bonus = true;
-        }
+        } else {
+			str_bonus.is_alive = false;
+		}
 
     } else {
       if (str_bonus.coll_bonus == false){ str_bonus.posy += gravedad; }
