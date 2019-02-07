@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <esat/window.h>
 #include <esat/draw.h>
 #include <esat/input.h>
