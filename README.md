@@ -6,6 +6,7 @@ PRINCIPAL:
 INCLUDES:
 - pablo.cc
 - Player.cc
+- Bonus.cc
 - platforms.cc
 
 
@@ -33,4 +34,5 @@ TO DO:
 - Cohete
 - Animaciones cohete
 - Disparo
+- Colisiones jugador
 
