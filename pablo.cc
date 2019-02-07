@@ -38,8 +38,8 @@ void LoadInterfaceSprites(){
   esat::DrawSetTextSize(40);
 
   //intro
-  *(s_intro) = esat::SpriteFromFile("./resources/Sprites/intro_jetpac1.png");
-  *(s_intro + 1) = esat::SpriteFromFile("./resources/Sprites/intro_jetpac2.png");
+  *(s_intro) = esat::SpriteFromFile("./resources/Sprites/intro_jetpac1_2.0.png");
+  *(s_intro + 1) = esat::SpriteFromFile("./resources/Sprites/intro_jetpac2_2.0.png");
 }
 
 void ReleaseSpritesForInterface(){
@@ -257,11 +257,32 @@ void PrintMenu(){
   esat::DrawText(140,550, "© 1983 A.C.G ALL RIGHTS RESERVED");
 }
 
+void DrawLoadScreen(){
+  int aux_rand = 0;
+  for (int i=0;i< kWindowY; i++){
+    if(seg_counter%1 == 0){aux_rand = rand()%3;}
+    switch (aux_rand) {
+      case 0:
+        esat::DrawSetStrokeColor(255, 255, 0);
+        break;
+      case 1:
+        esat::DrawSetStrokeColor(2, 24, 165);
+        break;
+      case 2:
+        esat::DrawSetStrokeColor(103, 108, 113);
+        break;
+    }
+    esat::DrawLine(0, i, kWindowX, i);
+  }
+}
+
 void PrintIntro(){
+  DrawLoadScreen();
+
   if ( seg_counter% 2 == 0 ){
-    esat::DrawSprite( (*s_intro), 0, 0);
+    esat::DrawSprite( (*s_intro), 80, 50);
   }else{
-    esat::DrawSprite( (*(s_intro + 1 )), 0, 0);
+  esat::DrawSprite( (*(s_intro + 1 )), 80, 50);
   }
   if( esat::IsSpecialKeyDown(esat::kSpecialKey_Space) ){
     phase = kGamePhase_Menu;
