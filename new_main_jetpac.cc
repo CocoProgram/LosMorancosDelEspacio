@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <esat/window.h>
 #include <esat/draw.h>
@@ -179,6 +180,7 @@ void Collisions () {
 
 int esat::main(int argc, char **argv) {
 	esat::WindowInit(kWindowX,kWindowY);
+  srand(time(NULL));
   PreMemorySaved();
   LoadSprites();
   InitializeParametres();
@@ -190,7 +192,7 @@ int esat::main(int argc, char **argv) {
     	last_time = esat::Time();
     	esat::DrawBegin();
     	esat::DrawClear(0,0,0);
-        TimeInFps();
+      TimeInFps();
 	
 	PrintScore();
 
