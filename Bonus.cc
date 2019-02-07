@@ -25,44 +25,45 @@ void BonusSpawn(float gravedad){
 
     if(str_bonus.is_alive == false) {
       bonus_random_spawn = rand()%201;
+
         if(bonus_random_spawn <= 50){
-          str_bonus.coll_bonus = false;
-          str_bonus.type_bonus = kBonusType_0;
-          str_bonus.bonus_sprite = (*all_bonus_sprite);
-          str_bonus.posx = rand()%727*1.0f;
-          str_bonus.is_alive = true;
-          str_bonus.draw_bonus = true;
-        }else if (bonus_random_spawn <= 70){
-          str_bonus.coll_bonus = false;
-          str_bonus.type_bonus = kBonusType_1;
-          str_bonus.bonus_sprite = (*(all_bonus_sprite + 4));
-          str_bonus.posx = rand()%727*1.0f;
-          str_bonus.is_alive = true;
-          str_bonus.draw_bonus = true;
+            str_bonus.coll_bonus = false;
+            str_bonus.type_bonus = kBonusType_0;
+            str_bonus.bonus_sprite = (*all_bonus_sprite);
+            str_bonus.posx = rand()%315*1.0f + rand()%315*1.0f;
+            str_bonus.is_alive = true;
+            str_bonus.draw_bonus = true;
+        } else if (bonus_random_spawn <= 70){
+            str_bonus.coll_bonus = false;
+            str_bonus.type_bonus = kBonusType_1;
+            str_bonus.bonus_sprite = (*(all_bonus_sprite + 4));
+            str_bonus.posx = rand()%315*1.0f + rand()%315*1.0f;
+            str_bonus.is_alive = true;
+            str_bonus.draw_bonus = true;
         } else if( bonus_random_spawn <= 90) {
-          str_bonus.coll_bonus = false;
-          str_bonus.type_bonus = kBonusType_2;
-          str_bonus.bonus_sprite = (*(all_bonus_sprite + 5));
-          str_bonus.posx = rand()%727*1.0f;
-          str_bonus.is_alive = true;
-          str_bonus.draw_bonus = true;
+            str_bonus.coll_bonus = false;
+            str_bonus.type_bonus = kBonusType_2;
+            str_bonus.bonus_sprite = (*(all_bonus_sprite + 5));
+            str_bonus.posx = rand()%315*1.0f + rand()%315*1.0f;
+            str_bonus.is_alive = true;
+            str_bonus.draw_bonus = true;
         } else if(bonus_random_spawn <= 95){
-          str_bonus.coll_bonus = false;
-          str_bonus.type_bonus = kBonusType_3;
-          str_bonus.bonus_sprite = (*(all_bonus_sprite + 6));
-          str_bonus.posx = rand()%727*1.0f;
-          str_bonus.is_alive = true;
-          str_bonus.draw_bonus = true;
+            str_bonus.coll_bonus = false;
+              str_bonus.type_bonus = kBonusType_3;
+              str_bonus.bonus_sprite = (*(all_bonus_sprite + 6));
+              str_bonus.posx = rand()%315*1.0f + rand()%315*1.0f;
+              str_bonus.is_alive = true;
+              str_bonus.draw_bonus = true;
         } else if(bonus_random_spawn <= 100) {
-          str_bonus.coll_bonus = false;
-          str_bonus.type_bonus = kBonusType_4;
-          str_bonus.bonus_sprite = (*(all_bonus_sprite + 7));
-          str_bonus.posx = rand()%727*1.0f;
-          str_bonus.is_alive = true;
-          str_bonus.draw_bonus = true;
+            str_bonus.coll_bonus = false;
+            str_bonus.type_bonus = kBonusType_4;
+            str_bonus.bonus_sprite = (*(all_bonus_sprite + 7));
+            str_bonus.posx = rand()%315*1.0f + rand()%315*1.0f;
+              str_bonus.is_alive = true;
+              str_bonus.draw_bonus = true;
         } else {
-			str_bonus.is_alive = false;
-		}
+			       str_bonus.is_alive = false;
+		    }
 
     } else {
       if (str_bonus.coll_bonus == false){ str_bonus.posy += gravedad; }
@@ -104,25 +105,41 @@ void BonusSpawn(float gravedad){
     }
 }
 void BonusCollision(){
+  /* COLSIIONES CON PLATAFORMAS */
   if  ( (str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite) ) >= (*str_mapa).posy ) {
       str_bonus.coll_bonus = true;
   }
   else if ( (str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite)) >= (*(str_mapa + 1)).posy
-  && ( ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 1)).posx + esat::SpriteWidth( (*(str_mapa + 1)).platform_sprites) ) )
-  && ( ( str_bonus.posx  ) >= (*(str_mapa + 1)).posx ) ) || ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 1)).posx + esat::SpriteWidth( (*(str_mapa + 1)).platform_sprites) ) )
-  && ( ( str_bonus.posx ) >= (*(str_mapa + 1)).posx ) ) )  ){
+  && ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) >=  (*(str_mapa + 1)).posx)
+  && ( ( str_bonus.posx ) <= (*(str_mapa + 1)).posx + esat::SpriteWidth( (*(str_mapa + 1)).platform_sprites) ) ) )
+{
     str_bonus.coll_bonus = true;
   }
   else if ( (str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite)) >= (*(str_mapa + 2)).posy
-  && ( ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 2)).posx + esat::SpriteWidth( (*(str_mapa + 2)).platform_sprites) ) )
-  && ( ( str_bonus.posx  ) >= (*(str_mapa + 2)).posx ) ) || ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 2)).posx + esat::SpriteWidth( (*(str_mapa + 2)).platform_sprites) ) )
-  && ( ( str_bonus.posx ) >= (*(str_mapa + 2)).posx ) ) )  ){
+  && ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) >=  (*(str_mapa + 2)).posx)
+  && ( ( str_bonus.posx ) <= (*(str_mapa + 2)).posx + esat::SpriteWidth( (*(str_mapa + 2)).platform_sprites) ) ) )
+{
     str_bonus.coll_bonus = true;
   }
   else if ( (str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite)) >= (*(str_mapa + 3)).posy
-  && ( ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) )
-  && ( ( str_bonus.posx  ) >= (*(str_mapa + 3)).posx ) ) || ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) <= ( (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) )
-  && ( ( str_bonus.posx ) >= (*(str_mapa + 3)).posx ) ) )  ){
+  && ( ( ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) >=  (*(str_mapa + 3)).posx)
+  && ( ( str_bonus.posx ) <= (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) ) )
+{
     str_bonus.coll_bonus = true;
+  }
+
+  /* COLISIONES CON EL JUGADOR */
+
+  if ( ( ( (str_player.posx <= ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) ) )
+  &&  ( str_player.posx >=  str_bonus.posx ) )
+  ||  ( (str_player.posx + 31 ) <=  ( str_bonus.posx + esat::SpriteWidth(str_bonus.bonus_sprite) )
+  &&  ( ( str_player.posx + 31 ) >=  str_bonus.posx ) ) )
+  && ( (str_player.posy + 40 >= str_bonus.posy)
+  && (str_player.posy + 40 <= (str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite) ) ) ) ) {
+    str_bonus.is_alive = false;
+    str_bonus.posy = 0;
+    str_bonus.draw_bonus = false;
+    str_bonus.coll_bonus = false;
+    str_player.score += str_bonus.points;
   }
 }
