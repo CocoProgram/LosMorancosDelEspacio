@@ -61,6 +61,8 @@ struct TPlayer{
   char vida = 5;
   float jetpac;
   double score;
+  int direction;
+  int loop;
   int phase_animation;
   float speed_walk;
 };
@@ -127,6 +129,7 @@ void TimeInFps(){
 }
 
 #include "pablo.cc"
+#include "Player.cc"
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
