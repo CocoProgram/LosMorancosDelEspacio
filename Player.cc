@@ -6,48 +6,36 @@ void PlayerFlying(TPlayer *player){
         player->jetpac=-5;
       }
       if (player->jetpac>=5){
-        player->jetpac=5;
+        player->jetpac=5.0f;
       }
   }else{
-
     player->jetpac=0;
   }
 
   if (g_jetpac){
-    player->jetpac-=0.25;
-
+    player->jetpac-=0.25f;
     if(!player->is_flying){
-
-      player->posy-=0.25;
       player->is_flying=true;
     }
   }else if (player->is_flying){
-    player->jetpac+=0.25;
+    player->jetpac+=0.25f;
   }
 }
 
 void PlayerMovementLimits(TPlayer *player){
 
-  if(player->posy+esat::SpriteHeight(*((str_player.player_sprites)+str_player.phase_animation))
-    >=(*str_mapa).posy){
-
+  if(((player->posy + 49) >= (*str_mapa).posy) && g_jetpac == false){
     player->is_flying=false;
-    player->posy=(*str_mapa).posy-esat::SpriteHeight(*((str_player.player_sprites)+str_player.phase_animation));
+    player->posy=((*str_mapa).posy - 49);
+    player->jetpac = 0.0f;
+  }else if(player->posy<=0){
+    player->posy=0.1f;
+    player->jetpac=0.5f;
   }
 
-  if(player->posy<=0){
-
-    player->posy=0.1;
-    player->jetpac=0.5;
-  }
-
-  if(player->posx>kWindowX){
-
+  if(player->posx > kWindowX){
     player->posx=0-esat::SpriteWidth(*((str_player.player_sprites)+str_player.phase_animation));
-  }
-
-  if(player->posx<0-esat::SpriteWidth(*((str_player.player_sprites)+str_player.phase_animation))){
-
+  } else if(player->posx < (-esat::SpriteWidth(*((str_player.player_sprites)+str_player.phase_animation) ) ) ){
     player->posx=kWindowX;
   }
 }
@@ -56,20 +44,20 @@ void PlayerFlyingMovement(TPlayer *player){
 
   if(g_left){
 
-    player->speed_walk-=0.2;
+    player->speed_walk-=0.2f;
   }
 
   if(g_right){
 
-    player->speed_walk+=0.2;
+    player->speed_walk+=0.2f;
   }
 
   if(!g_right && !g_left){
 
     if(player->speed_walk>0){
-      player->speed_walk-=0.1;
+      player->speed_walk-=0.1f;
     }else{
-       player->speed_walk+=0.1;
+       player->speed_walk+=0.1f;
     }
   }
 
@@ -90,17 +78,17 @@ void PlayerGroundMovement(TPlayer *player){
 
   if(g_left){
 
-    player->speed_walk=-3;
+    player->speed_walk=-3.0f;
   }
 
   if(g_right){
 
-    player->speed_walk=3;
+    player->speed_walk=3.0f;
   }
 
   if(!g_right && !g_left){
 
-    player->speed_walk=0;
+    player->speed_walk=0.0f;
   }
 
   player->posx+=player->speed_walk;
@@ -197,3 +185,41 @@ void PlayerFunctions(){
   PlayerMovementLimits(&str_player);
   PlayerAnimations(&str_player);
 }
+
+void CollisionPlayer() {
+  if ( ( (str_player.posy + 50) > ( (*(str_mapa + 3)).posy +18 ) )
+  && ( (str_player.posy - 1) < ( (*(str_mapa + 3)).posy) )
+  && ( (str_player.posx + 31) > ( (*(str_mapa + 3)).posx) )
+  && ( (str_player.posx) < ( (*(str_mapa + 3)).posx) ) ) {
+    str_player.posx -= 0.1f;
+    str_player.speed_walk = 0.0f;
+    printf (" coll 1 \n ");
+  } else if ( ( (str_player.posy + 50) > ( (*(str_mapa + 3)).posy +18 ) )
+  && ( (str_player.posy - 1) < ( (*(str_mapa + 3)).posy) )
+  && ( (str_player.posx ) < ( (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) )
+  && ( (str_player.posx + 31) > ( (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) ) ) {
+      str_player.posx += 0.1f;
+      str_player.speed_walk = 0.0f;
+      printf (" coll 2 \n ");
+  } else if ( ( (str_player.posy + 50) >= (*(str_mapa + 3)).posy )
+  && ( str_player.posy < (*(str_mapa + 3)).posy )
+  && ( (str_player.posx + 31) > ( (*(str_mapa + 3)).posx) )
+  && ( str_player.posx  < ( (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) ) ){
+    if (g_jetpac == false) {
+      str_player.is_flying = false;
+      str_player.jetpac = 0.0f;
+    }
+
+    str_player.posy = (*(str_mapa + 3)).posy - 50;
+  } else if ( ( (str_player.posy - 1) <= ( (*(str_mapa + 3)).posy +18 ) )
+  && ( (str_player.posy - 1) >= (*(str_mapa + 3)).posy )
+  && ( str_player.posx < ( (*(str_mapa + 3)).posx + esat::SpriteWidth((*(str_mapa + 3)).platform_sprites) ) )
+  &&  ( (str_player.posx + 31) > (*(str_mapa + 3)).posx) ) {
+      str_player.posy += 0.1f;
+      str_player.jetpac = 0.5f;
+
+    } else {
+    str_player.is_flying = true;
+  }
+}
+
