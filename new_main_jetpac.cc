@@ -134,37 +134,42 @@ void TimeInFps(){
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Right) != NULL ? g_right = true : g_right = false;
-  esat::IsSpecialKeyPressed(esat::kSpecialKey_Space) != NULL ? g_jetpac = true : g_jetpac = false;
-  esat::IsKeyPressed('D') != NULL ? g_shoot = true : g_shoot = false;
+  esat::IsSpecialKeyPressed(esat::kSpecialKey_Up) != NULL ? g_jetpac = true : g_jetpac = false;
+  esat::IsKeyPressed(esat::kSpecialKey_Space) != NULL ? g_shoot = true : g_shoot = false;
 }
 
 void PreMemorySaved(){
 	MemoryForInterface();
 	BonusSpriteMemory();
   PlatformsMemoryReserved();
+  PlayerMemorySaved();
 }
 void FreeMemorySaved(){
 	FreeMemoryForInterface();
 	BonusFreeMemory();
   PlatformsFreeMemory();
+  PlayerFreeMemory();
 }
 
 void InitializeParametres() {
   InitInterfaceParametres();
-	PlatformPositions();	
+	PlatformPositions();
+  PlayerInit();
 }
 
 void LoadSprites(){
 	LoadInterfaceSprites();
 	BonusSpritesLoad();
   PlaformsLoadSprites();
+  PlayerLoadSprites();
 }
 void SpritesRelease() {
 	ReleaseSpritesForInterface();
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
-BonusSpawn(g_gravity);
+  BonusSpawn(g_gravity);
   PlatformsDraw();
+  PlayerDraw();
 }  //VAMOH A DIBUJAR
 
 void Collisions () {
@@ -202,6 +207,7 @@ int esat::main(int argc, char **argv) {
 		  BoleanasTeclas();
       		  DrawingSprites();
      	          Collisions();
+      PlayerFunctions();
 		  break;
 
 		case kGamePhase_EndGame:
