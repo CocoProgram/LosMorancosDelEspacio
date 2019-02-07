@@ -28,8 +28,8 @@ Carlos:
 
 TO DO:
 - Niveles
-- Movimiento de los enemigos
+- Enemigos y Movimiento de los enemigos
 - Cohete
+- Animaciones cohete
 - Disparo
-- Animaciones
-- Acabar movimiento jugador
+
