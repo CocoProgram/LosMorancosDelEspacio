@@ -223,7 +223,6 @@ void CollisionPlayer() {
         str_player.jetpac = 0.5f;
 
       } else if (i==1) { //JC MAGIC :)
-        printf("MAGIA");
         str_player.is_flying = true;
     }
   }
