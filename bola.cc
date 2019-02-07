@@ -1,6 +1,7 @@
 
 
 //INICIALIZACION DEL ENEMIGO BOLA
+//LLamar antes de empezar el nivel que contenga este tipo de enemigo
 void InicializarBola(TEnemy *bola, esat::SpriteHandle *sprite){
 	
 	
@@ -18,11 +19,11 @@ void InicializarBola(TEnemy *bola, esat::SpriteHandle *sprite){
 	
 	for(int i=0;i<4;i++){
 		
-		(*(bola+i)).enemy_sprites = sprite;
+		(*(bola+i)).enemy_sprites = (sprite+(2*i));
 		(*(bola+i)).is_alive = true;
 		(*(bola+i)).posx = (kWindowX*(rand()%2));
 		(*(bola+i)).posy = 75 + (kWindowY / (1+rand()%5));
-		(*(bola+i)).enemy_type = kEnemyTypes_2;
+		//(*(bola+i)).enemy_type = kEnemyTypes_2;
 		(*(bola+i)).speedx = 2;
 		(*(bola+i)).speedy = 2;
 		(*(bola+i)).points = 30;
@@ -97,6 +98,7 @@ void MovimientoBola(TEnemy *Bola){
 	
 }
 
+//LLamar en el loop cuando se trabaja con este tipo de enemigos
 void controlBola(){
 		
 	for(int i=0;i<4;i++){

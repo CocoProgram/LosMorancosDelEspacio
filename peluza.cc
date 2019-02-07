@@ -3,21 +3,22 @@
 
 
 //INICIALIZACION DEL ENEMIGO PELUZA
+//LLamar antes de empezar el nivel que contenga este tipo de enemigo
 void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 	
 	
 	
-	*(Block_sprite_Enemy) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_azul.png");	
-	(*(Block_sprite_Enemy+1)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_azul.png");
+	*(sprite) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_azul.png");	
+	(*(sprite+1)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_azul.png");
 	
-	(*(Block_sprite_Enemy+2)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_lila.png");
-	(*(Block_sprite_Enemy+3)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_lila.png");
+	(*(sprite+2)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_lila.png");
+	(*(sprite+3)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_lila.png");
 	
-	(*(Block_sprite_Enemy+4)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_rojo.png");
-	(*(Block_sprite_Enemy+5)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_rojo.png");
+	(*(sprite+4)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_rojo.png");
+	(*(sprite+5)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_rojo.png");
 	
-	(*(Block_sprite_Enemy+6)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_verde.png");
-	(*(Block_sprite_Enemy+7)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_verde.png");
+	(*(sprite+6)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_verde.png");
+	(*(sprite+7)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_verde.png");
 	
 	for(int i=0;i<4;i++){
 		
@@ -32,7 +33,8 @@ void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 		(*(pelusa+i)).colour = i;
 		(*(pelusa+i)).phase_animation = 0;
 		(*(pelusa+i)).seg_counter = 0;
-	}	
+	}
+	
 }
 
 //Control y Animacion del enemigo tipo Pelusa
@@ -87,6 +89,7 @@ void MovimientoPelusa(TEnemy *pelusa){
 	
 }
 
+//LLamar en el loop cuando se trabaja con este tipo de enemigos
 void controlPelusa(){
 		
 	for(int i=0;i<4;i++){
