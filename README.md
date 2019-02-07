@@ -17,7 +17,7 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 # LosMorancosDelEspacio
 
 Alex & Pablo:
-- Interfaz y Cohete
+- Interfaz, Cohete, Bonus Fuel
 
 JC & Alejandro:
 - Jugador y Disparo
