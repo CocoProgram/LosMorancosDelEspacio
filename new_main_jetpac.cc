@@ -174,7 +174,7 @@ void DrawingSprites(){
 }  //VAMOH A DIBUJAR
 
 void Collisions () {
-  if(str_bonus.coll_bonus == false && str_bonus.is_alive == true) { BonusCollision(); }
+  if(str_bonus.is_alive == true) { BonusCollision(); }
 }
 
 
