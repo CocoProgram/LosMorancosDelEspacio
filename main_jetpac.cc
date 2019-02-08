@@ -69,6 +69,14 @@ struct TPlayer{
 };
 TPlayer str_player;
 
+struct TPropulsion{
+  float posx, posy;
+  bool visible =false;
+  esat::SpriteHandle *propulsion_sprites;
+  int phase_animation;
+};
+TPropulsion str_propulsion;
+
 struct TShoot {
   float posx, posy;
   //Metodo de dibujado desconocido.
@@ -144,12 +152,14 @@ void PreMemorySaved(){
 	BonusSpriteMemory();
   PlatformsMemoryReserved();
   PlayerMemorySaved();
+  PropulsionMemorySaved();
 }
 void FreeMemorySaved(){
 	FreeMemoryForInterface();
 	BonusFreeMemory();
   PlatformsFreeMemory();
   PlayerFreeMemory();
+  PropulsionFreeMemory();
 }
 
 void InitializeParametres() {
@@ -163,6 +173,7 @@ void LoadSprites(){
 	BonusSpritesLoad();
   PlaformsLoadSprites();
   PlayerLoadSprites();
+  PropulsionLoadSprites();
 }
 void SpritesRelease() {
 	ReleaseSpritesForInterface();
@@ -170,6 +181,7 @@ void SpritesRelease() {
 void DrawingSprites(){
   BonusSpawn(g_gravity);
   PlatformsDraw();
+  PropulsionDraw();
   PlayerDraw();
 }  //VAMOH A DIBUJAR
 
@@ -185,7 +197,7 @@ int esat::main(int argc, char **argv) {
   PreMemorySaved();
   LoadSprites();
   InitializeParametres();
-  
+
 	WindowSetMouseVisibility(true);
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
@@ -194,7 +206,7 @@ int esat::main(int argc, char **argv) {
     	esat::DrawBegin();
     	esat::DrawClear(0,0,0);
       TimeInFps();
-	
+
 	PrintScore();
 
 	      switch ( phase ){
@@ -209,13 +221,14 @@ int esat::main(int argc, char **argv) {
 		case kGamePhase_InGame:
 		  BoleanasTeclas();
       		  DrawingSprites();
-     	          Collisions();
+
       PlayerFunctions();
+      Collisions();
 		  break;
 
 		case kGamePhase_EndGame:
 		  break;
-	      }    
+	      }
 
     	esat::DrawEnd();
 
