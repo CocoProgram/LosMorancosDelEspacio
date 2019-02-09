@@ -117,6 +117,17 @@ struct TNave {
 };
 TNave *str_nave;
 
+struct Tfuel {
+  esat::Vec2 pos;
+  int f_counter = 6;
+  float f_gravity = 2;
+  bool is_active = false;
+  bool map_colision = false;
+  bool ship_colision = false;
+  bool player_colision = false;
+}fuel;
+#include "fuel.cc"
+
 bool g_right, g_left, g_jetpac, g_shoot;
 float g_gravity;
 
@@ -169,6 +180,7 @@ void InitializeParametres() {
 }
 
 void LoadSprites(){
+	LoadFuelSprite();
 	LoadInterfaceSprites();
 	BonusSpritesLoad();
   PlaformsLoadSprites();
@@ -177,6 +189,7 @@ void LoadSprites(){
 }
 void SpritesRelease() {
 	ReleaseSpritesForInterface();
+	ReleaseFuelSprite()
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
   BonusSpawn(g_gravity);
@@ -207,11 +220,12 @@ int esat::main(int argc, char **argv) {
     	esat::DrawClear(0,0,0);
       TimeInFps();
 
-	PrintScore();
+	
 
 	      switch ( phase ){
 		case kGamePhase_Menu:
-		  PrintMenu();
+		  PrintScore();      
+		  PrintMenu();			      
 		  break;
 
 		case kGamePhase_Intro:
@@ -219,9 +233,10 @@ int esat::main(int argc, char **argv) {
 		  break;
 
 		case kGamePhase_InGame:
+		  PrintScore();	      
 		  BoleanasTeclas();
       		  DrawingSprites();
-
+		  Fuel();
       PlayerFunctions();
       Collisions();
 		  break;
