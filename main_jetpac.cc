@@ -189,7 +189,7 @@ void LoadSprites(){
 }
 void SpritesRelease() {
 	ReleaseSpritesForInterface();
-	ReleaseFuelSprite()
+	ReleaseFuelSprite();
 }  //LIBERAR AQUÍ LOS SPRITES OSTIA
 void DrawingSprites(){
   BonusSpawn(g_gravity);
