@@ -15,10 +15,14 @@ unsigned char seg_counter = 0;
 
 const int kWindowX = 768, kWindowY = 576;
 
+esat::SpriteHandle *ship_1, *ship_2, *ship_3, *ship_4, *combustion, *ship_pieces_1, *ship_pieces_2, *ship_pieces_3, *ship_pieces_4; // Sprites para nave y combustion
+int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
+
 enum GamePhase { kGamePhase_Menu = 0,
                  kGamePhase_InGame,
                  kGamePhase_EndGame,
-	       	 kGamePhase_Intro};
+	       	       kGamePhase_Intro};
+
 GamePhase phase = kGamePhase_Intro;
 
 enum GameMode { OnePlayer, TwoPlayers, NoneSelected};
@@ -33,31 +37,25 @@ enum EnemyTypes { kEnemyTypes_0 = 0,
                   kEnemyTypes_6,
                   kEnemyTypes_7 };
 
-enum NaveType { kNaveType_0 = 0,
-                kNaveType_1,
-                kNaveType_2,
-                kNaveType_3 };
-
-enum BonusType {
-  kBonusType_0 = 0,
-  kBonusType_1,
-  kBonusType_2,
-  kBonusType_3,
-  kBonusType_4
-};
+enum BonusType { kBonusType_0 = 0,
+                 kBonusType_1,
+                 kBonusType_2,
+                 kBonusType_3,
+                 kBonusType_4 };
 
 struct TMapa{
   int posx, posy;
   esat::SpriteHandle platform_sprites;
 };
 TMapa *str_mapa;
-#include "platforms.cc"
 
+#include "platforms.cc"
 
 struct TPlayer{
   float posx, posy;
   esat::SpriteHandle *player_sprites; //Pasar a puntero, son 16
-  bool is_flying, is_alive = true;
+  bool show_player = true, is_flying, is_alive = true;
+  bool can_grab = true;
   bool shoot;
   char vida = 5;
   float jetpac;
@@ -107,15 +105,24 @@ struct TBonus {
   bool coll_bonus = false;
 };
 TBonus str_bonus;
+
 #include "bonus.cc"
 
 struct TNave {
   float posx, posy;
-  esat::SpriteHandle nave_sprites; //puntero con numero de piezas
-  int fuel_level;
-  NaveType nave_type;
+  int fuel_level, ship_parts;
 };
 TNave *str_nave;
+
+struct TPieces{
+  float posx, posy;
+  bool is_visible=false, is_attached=false;
+  bool just_dropped=false;
+};
+TPieces *str_pieces;
+
+bool g_right, g_left, g_jetpac, g_shoot;
+float g_gravity;
 
 struct Tfuel {
   esat::Vec2 pos;
@@ -125,11 +132,12 @@ struct Tfuel {
   bool map_colision = false;
   bool ship_colision = false;
   bool player_colision = false;
+  bool is_attached = false;
+  bool just_dropped = false;
 }fuel;
-#include "fuel.cc"
 
-bool g_right, g_left, g_jetpac, g_shoot;
-float g_gravity;
+#include "fuel.cc"
+#include "rocket.cc"
 
 double g_HiScore = 0;
 bool g_keyboardSelected = true; // bool de control para el menú
@@ -159,59 +167,71 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
 }
 
 void PreMemorySaved(){
-	MemoryForInterface();
+  LoadShipPointers();
+
+  MemoryForInterface();
 	BonusSpriteMemory();
   PlatformsMemoryReserved();
   PlayerMemorySaved();
   PropulsionMemorySaved();
 }
+
 void FreeMemorySaved(){
-	FreeMemoryForInterface();
+  FreeMemoryShip();
+
+  FreeMemoryForInterface();
 	BonusFreeMemory();
   PlatformsFreeMemory();
   PlayerFreeMemory();
   PropulsionFreeMemory();
 }
 
-void InitializeParametres() {
-  InitInterfaceParametres();
-	PlatformPositions();
-  PlayerInit();
+void InitializeParametres(){
+    InitInterfaceParametres();
+  	PlatformPositions();
+    PlayerInit();
+    PropulsionLoadSprites();
 }
 
 void LoadSprites(){
-	LoadFuelSprite();
-	LoadInterfaceSprites();
+  LoadShipSprites();
+  LoadFuelSprite();
+  LoadInterfaceSprites();
 	BonusSpritesLoad();
   PlaformsLoadSprites();
   PlayerLoadSprites();
-  PropulsionLoadSprites();
 }
 void SpritesRelease() {
-	ReleaseSpritesForInterface();
-	ReleaseFuelSprite();
-}  //LIBERAR AQUÍ LOS SPRITES OSTIA
+ShipSpritesRelease();
+ReleaseFuelSprite();
+ReleaseSpritesForInterface();
+}
+
 void DrawingSprites(){
   BonusSpawn(g_gravity);
   PlatformsDraw();
   PropulsionDraw();
   PlayerDraw();
-}  //VAMOH A DIBUJAR
+}
 
 void Collisions () {
   if(str_bonus.is_alive == true) { BonusCollision(); }
   if(str_player.is_alive == true) { CollisionPlayer(); }
 }
 
-
 int esat::main(int argc, char **argv) {
+
 	esat::WindowInit(kWindowX,kWindowY);
+  WindowSetMouseVisibility(true);
   srand(time(NULL));
   PreMemorySaved();
+
   LoadSprites();
   InitializeParametres();
 
-	WindowSetMouseVisibility(true);
+  // Esto hay que llamarlo también dentro de InGame en cada nivel que se haga. Por lo tanto esto de aquí abajo se modificará.
+  InitializePieces();
+  InitializeShip();
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
 
@@ -220,12 +240,10 @@ int esat::main(int argc, char **argv) {
     	esat::DrawClear(0,0,0);
       TimeInFps();
 
-	
-
-	      switch ( phase ){
+	      switch (phase){
 		case kGamePhase_Menu:
-		  PrintScore();      
-		  PrintMenu();			      
+      PrintScore();
+      PrintMenu();
 		  break;
 
 		case kGamePhase_Intro:
@@ -233,17 +251,28 @@ int esat::main(int argc, char **argv) {
 		  break;
 
 		case kGamePhase_InGame:
-		  PrintScore();	      
+      PrintScore();
 		  BoleanasTeclas();
-      		  DrawingSprites();
-		  Fuel();
+      DrawingSprites();
       PlayerFunctions();
       Collisions();
+
+      Fuel();
+
+      DrawShipPieces(g_level);
+      DrawShip(*str_nave,g_level); // Llamar siempre que esté en el juego.
+      CatchPieces(*str_nave);
+      CatchFuel();
+      DropFuel();
+      DropCargo();
+      PlayerInShip();
+      LevelControl();
+
 		  break;
 
 		case kGamePhase_EndGame:
 		  break;
-	      }
+}
 
     	esat::DrawEnd();
 
@@ -255,7 +284,6 @@ int esat::main(int argc, char **argv) {
   }
   SpritesRelease();
   FreeMemorySaved();
-
 
   esat::WindowDestroy();
 
