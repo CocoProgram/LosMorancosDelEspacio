@@ -29,10 +29,8 @@ Carlos:
 - Sprites y Bonus
 
 TO DO:
-- Niveles
+- Gestión de niveles
 - Enemigos y Movimiento de los enemigos
-- Cohete
-- Animaciones cohete
 - Disparo
-- Colisiones jugador
+- Sonido
 
