@@ -81,20 +81,9 @@ void PlayerFlyingMovement(TPlayer *player){
 
 void PlayerGroundMovement(TPlayer *player){
 
-  if(g_left){
-
-    player->speed_walk=-3.0f;
-  }
-
-  if(g_right){
-
-    player->speed_walk=3.0f;
-  }
-
-  if(!g_right && !g_left){
-
-    player->speed_walk=0.0f;
-  }
+  if(g_left) { player->speed_walk=-3.0f; }
+  if(g_right) { player->speed_walk=3.0f; }
+  if(!g_right && !g_left) { player->speed_walk=0.0f; }
 
   player->posx+=player->speed_walk;
 }
@@ -103,37 +92,28 @@ void PlayerAnimations(TPlayer *player){
 
   int stage=player->direction;
 
-  if(g_left){
-
-    player->direction=0;
-  }
-
-  if(g_right){
-
-    player->direction=1;
-  }
-
-  if(!player->is_flying){
-
-    if(g_left || g_right){
-
-      if(fps_counter%5==0){
+  if(g_left) { player->direction=0; }
+  if(g_right){ player->direction=1; }
+  if(!player->is_flying)
+  {
+    if(g_left || g_right)
+    {
+      if(fps_counter%5==0)
+      {
         player->loop++;
       }
     }
-  }else{
-
+  }
+  else
+  {
     stage+=2;
-
-    if(fps_counter%5==0){
+    if(fps_counter%5==0)
+    {
       player->loop++;
     }
   }
 
-  if(player->loop==4){
-
-    player->loop=0;
-  }
+  if(player->loop==4){ player->loop=0; }
 
   player->phase_animation=(stage*4)+player->loop;
 }
@@ -190,7 +170,7 @@ void PropulsionLoadSprites(){
 }
 
 void PropulsionDraw(){
-  if(str_propulsion.visible){
+  if(str_propulsion.visible && str_player.show_player){
     esat::DrawSprite(*((str_propulsion.propulsion_sprites)+str_propulsion.phase_animation), str_propulsion.posx, str_propulsion.posy);
   }
 }
@@ -201,14 +181,17 @@ void PropulsionFreeMemory(){
 }
 
 void PlayerDraw(){
-
-  esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
+  if(str_player.show_player)
+  {
+    esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
+  }
 }
 
 void PlayerInit(){
 
-  str_player.posx=500;   str_player.posy=500;  str_player.phase_animation=0;
+  str_player.posx=450;   str_player.posy=500;  str_player.phase_animation=0;
   str_player.speed_walk=0; str_player.loop=0;  str_player.direction=0;
+  str_player.show_player = true;
 }
 
 void PlayerFunctions(){
