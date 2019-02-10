@@ -139,7 +139,6 @@ void PlayerAnimations(TPlayer *player){
 }
 
 void PropulsionAnimations(TPropulsion *propulsion){
-  printf("%d\n",seg_counter );
   if (propulsion->visible){
     if (fps_counter%20==0){
       if(propulsion->phase_animation==2){
