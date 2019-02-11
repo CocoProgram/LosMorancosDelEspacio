@@ -41,21 +41,21 @@ void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 void MovimientoPelusa(TEnemy *pelusa){
 	
 	(*(pelusa)).posx += (*(pelusa)).speedx;
-	/*
-	if(/*colicion terreno){
+	
+	if(CollisionEnemy((*(pelusa)))){
 		
 		(*(pelusa)).speedx *= (-1);
 		(*(pelusa)).posx += (*(pelusa)).speedx;
 	}
-	*/
+	
 	(*(pelusa)).posy += (*(pelusa)).speedy;
-	/*
-	if(/*colicion terreno){
+	
+	if(CollisionEnemy((*(pelusa)))){
 		
 		(*(pelusa)).speedy *= (-1);
 		(*(pelusa)).posy += (*(pelusa)).speedy;
 	}
-	*/
+	
 	if((*(pelusa)).posy < 50){
 		
 		(*(pelusa)).speedy *= (-1);

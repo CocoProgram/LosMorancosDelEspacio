@@ -40,21 +40,21 @@ void MovimientoBola(TEnemy *Bola){
 	
 	
 	(*(Bola)).posx += (*(Bola)).speedx;
-	/*
-	if(/*colicion terreno){
+	
+	if(CollisionEnemy((*(Bola)))){
 		
 		(*(Bola)).speedx *= (-1);
 		(*(Bola)).posx += (*(Bola)).speedx;
 	}
-	*/
+	
 	(*(Bola)).posy += (*(Bola)).speedy;
-	/*
-	if(/*colicion terreno){
+	
+	if(CollisionEnemy((*(Bola)))){
 		
 		(*(Bola)).speedy *= (-1);
 		(*(Bola)).posy += (*(Bola)).speedy;
 	}
-	*/
+	
 	if((*(Bola)).posx > (kWindowX)){
 		
 		(*(Bola)).posx = (-55);		
