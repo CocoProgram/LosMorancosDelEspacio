@@ -17,6 +17,7 @@ const int kWindowX = 768, kWindowY = 576;
 
 esat::SpriteHandle *ship_1, *ship_2, *ship_3, *ship_4, *combustion, *ship_pieces_1, *ship_pieces_2, *ship_pieces_3, *ship_pieces_4; // Sprites para nave y combustion
 int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
+esat::SpriteHandle *Block_sprite_Enemy;//Sprites de los enemigos.
 
 enum GamePhase { kGamePhase_Menu = 0,
                  kGamePhase_InGame,
@@ -85,15 +86,16 @@ TShoot *str_shoot;
 
 struct TEnemy {
   float posx, posy;
-  esat:: SpriteHandle enemy_sprites;
-  EnemyTypes enemy_type;
+  esat:: SpriteHandle *enemy_sprites;
+  //EnemyTypes enemy_type;
   bool is_alive;
   float speedx, speedy;
   int points;
   char colour;
-  int phase_animation;
+  bool phase_animation;
+  int seg_counter = 0;
 };
-TEnemy str_enemy;
+TEnemy *str_enemy;
 
 struct TBonus {
   float posx = 0, posy = 0;
