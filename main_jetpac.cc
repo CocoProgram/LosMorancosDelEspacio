@@ -74,7 +74,7 @@ struct TPropulsion{
   esat::SpriteHandle *propulsion_sprites;
   int phase_animation;
 };
-TPropulsion str_propulsion;
+TPropulsion str_propulsion, *str_explo_enemys;
 
 struct TShoot {
   float posx, posy;
@@ -161,7 +161,7 @@ void TimeInFps(){
 #include "pablo.cc"
 #include "Player.cc"
 
-#include "base_enemy.cc" 
+#include "base_enemy.cc"
 #include "peluza.cc"
 #include "bola.cc"
 #include "avion.cc"
@@ -244,7 +244,7 @@ int esat::main(int argc, char **argv) {
   // Esto hay que llamarlo también dentro de InGame en cada nivel que se haga. Por lo tanto esto de aquí abajo se modificará.
   InitializePieces();
   InitializeShip();
-	
+
   InicializarEnemyLevel();
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
