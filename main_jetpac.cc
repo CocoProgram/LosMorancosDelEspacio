@@ -244,6 +244,8 @@ int esat::main(int argc, char **argv) {
   // Esto hay que llamarlo también dentro de InGame en cada nivel que se haga. Por lo tanto esto de aquí abajo se modificará.
   InitializePieces();
   InitializeShip();
+	
+  InicializarEnemyLevel();
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
 
@@ -279,7 +281,7 @@ int esat::main(int argc, char **argv) {
       DropCargo();
       PlayerInShip();
       LevelControl();
-
+      ControlEnemyLevel();
 		  break;
 
 		case kGamePhase_EndGame:
