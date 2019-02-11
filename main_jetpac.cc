@@ -158,6 +158,11 @@ void TimeInFps(){
 
 #include "pablo.cc"
 #include "Player.cc"
+#include "base_enemy.cc"
+#include "peluza.cc"
+#include "bola.cc"
+#include "avion.cc"
+#include "ovni.cc"
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
@@ -174,6 +179,7 @@ void PreMemorySaved(){
   PlatformsMemoryReserved();
   PlayerMemorySaved();
   PropulsionMemorySaved();
+  ReservaMemoriaEnemy();
 }
 
 void FreeMemorySaved(){
@@ -184,6 +190,7 @@ void FreeMemorySaved(){
   PlatformsFreeMemory();
   PlayerFreeMemory();
   PropulsionFreeMemory();
+  LiberarEnemy();
 }
 
 void InitializeParametres(){
