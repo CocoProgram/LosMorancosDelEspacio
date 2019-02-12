@@ -95,6 +95,7 @@ TShoot *str_shoot;
 struct TEnemy {
   float posx, posy;
   esat:: SpriteHandle *enemy_sprites;
+  TPropulsion *my_explo;
   //EnemyTypes enemy_type;
   bool is_alive;
   float speedx, speedy;
@@ -104,6 +105,7 @@ struct TEnemy {
   int seg_counter = 0;
 };
 TEnemy *str_enemy;
+int g_num_enemy = 4;
 
 struct TBonus {
   float posx = 0, posy = 0;
