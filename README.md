@@ -30,7 +30,7 @@ Carlos:
 - Sprites y Bonus
 
 TO DO:
-- Gestión de niveles
+- Gestión de niveles (falta si hay más de un jugador, el resto ya está, hay que incluir los enemigos.)
 - Enemigos y Movimiento de los enemigos
 - Disparo
 - Sonido
