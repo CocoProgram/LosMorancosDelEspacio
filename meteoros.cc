@@ -36,7 +36,6 @@ void InicializarMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 		(*(meteoro+i)).enemy_type = kEnemyTypes_0;
 		(*(meteoro+i)).speedx = 2;
 		(*(meteoro+i)).speedy = 1;
-		(*(meteoro+i)).direccionx = rand()%2;
 		(*(meteoro+i)).points = 25;
 		(*(meteoro+i)).colour = i;
 		(*(meteoro+i)).phase_animation = 0;
