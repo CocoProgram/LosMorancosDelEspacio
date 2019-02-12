@@ -170,6 +170,7 @@ void TimeInFps(){
 
 #include "pablo.cc"
 #include "Player.cc"
+#include "Explo_Enemys.cc"
 
 #include "base_enemy.cc"
 #include "peluza.cc"
