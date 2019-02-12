@@ -1,4 +1,5 @@
 
+
 void LoadShipPointers() { // Poner en el main de load pointers ( o no)
   str_nave = (TNave*) calloc (1, sizeof(TNave)); // Crearemos sólo un elemento a la vez.
   str_pieces = (TPieces*) calloc (3, sizeof(TPieces)); // Crearemos tres elementos a la vez
@@ -246,7 +247,7 @@ void DrawShip(TNave ship, int lvl){
       if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 3)), ship.posx, ship.posy-72); }
       if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 3)), ship.posx, ship.posy-72); }
       if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 3)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 3)), ship.posx, ship.posy); }
+      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 3)), ship.posx, ship.posy-72); }
       break;
       case 3:
       if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 4)), ship.posx, ship.posy-72); }
@@ -267,8 +268,7 @@ void DrawShip(TNave ship, int lvl){
       if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 6)), ship.posx, ship.posy-72); }
       break;
       case 6:
-      if(lvl <= 6)
-      {
+      if(lvl <= 6) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_1 + 7)), ship.posx, ship.posy-72);
@@ -277,8 +277,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_1 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 6 && lvl <= 12)
-      {
+      if(lvl > 6 && lvl <= 12) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_2 + 7)), ship.posx, ship.posy-72);
@@ -288,8 +287,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_2 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 12 && lvl <= 18)
-      {
+      if(lvl > 12 && lvl <= 18) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_3 + 7)), ship.posx, ship.posy-72);
@@ -299,8 +297,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_3 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 18 && lvl <= 24)
-      {
+      if(lvl > 18 && lvl <= 24) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_4 + 7)), ship.posx, ship.posy-72);
@@ -340,27 +337,30 @@ void PlayerInShip()
       str_player.vida +=1;
       if(str_player.vida > 5) {str_player.vida = 5;}
     }
-    if(str_player.show_player == false) // ESTO NO
+    if(str_player.show_player == false)
     {
       (*str_nave).posy-=1;
       RocketCreatePropulsion();
     }
   }
-}
 
-void LevelControl()
-{
-  if((*str_nave).posy < 50)
+  // Si está arriba, para que baje. (sabemos que esta arriba por el fuel y el show player)
+  if(g_level == 24 && (*str_nave).fuel_level == 0 && str_player.show_player == false && (*str_nave).posy < 519)
   {
-    (*str_nave).fuel_level = 0;
-    (*str_nave).posy += 2;
-    // 1- Que desaparezcan todos los enemigos y bonus.
-    // 2- Que la nave deje de parpadear y se quede en blanco
-    // 2- Que descienda hasta posy 500 y se pare.
-    // 3- Una vez haya descendido g_level + 1
-    // 4- Inicializamos jugador, piezas, nave y enemigos
-    // 5- Restamos una vida al jugador.
-    // 6- Empieza el nuevo nivel.
+    newLevel = true;
+    g_level = 0;
+  }
+  else
+  {
+    if((*str_nave).fuel_level == 0 && str_player.show_player == false && (*str_nave).posy < 519)
+    {
+      (*str_nave).posy += 1;
+      RocketCreatePropulsion();
+      if((*str_nave).posy == 519 )
+      {
+        newLevel = true;
+      }
+    }
   }
 }
 
@@ -379,9 +379,7 @@ void CatchFuel(){
   }
 }
 
-void CatchPieces(TNave ship){
-  // Aquí sería ver si le pasamos el jugador y la nave
-  // Esto solo lo comprobariamos si estamos en los niveles 1,7,13,18
+void CatchPieces(TNave ship) {
   if(ship.ship_parts != 3 && str_player.can_grab)
   {
     if(ship.ship_parts == 1)
@@ -477,19 +475,71 @@ void DropCargo(){
   }
 }
 
-void InitializePieces()
-{
-    (*str_pieces).posx = 500;         (*str_pieces).posy = 519;           (*str_pieces).is_visible = true;
-    (*(str_pieces + 1)).posx = 150;   (*(str_pieces + 1)).posy = 184;     (*(str_pieces + 1)).is_visible = true;
-    (*(str_pieces + 2)).posx = 390;   (*(str_pieces + 2)).posy = 256;     (*(str_pieces + 2)).is_visible = true;
+void InitializePieces(){
+    (*str_pieces).posx = 500;
+    (*str_pieces).posy = 519;
+    (*str_pieces).is_visible = true;
+    (*str_pieces).is_attached=false;
+    (*str_pieces).just_dropped=false;
+
+    (*(str_pieces + 1)).posx = 150;
+    (*(str_pieces + 1)).posy = 184;
+    (*(str_pieces + 1)).is_visible = true;
+    (*(str_pieces + 1)).is_attached=false;
+    (*(str_pieces + 1)).just_dropped=false;
+
+    (*(str_pieces + 2)).posx = 390;
+    (*(str_pieces + 2)).posy = 256;
+    (*(str_pieces + 2)).is_visible = true;
+    (*(str_pieces + 2)).is_attached=false;
+    (*(str_pieces + 2)).just_dropped=false;
 }
 
-void InitializeShip()
+void InitializeShip(){
+  if(g_level == 1 || g_level == 7 || g_level == 13 || g_level == 19 )
+  {
+    (*str_nave).posx=500;
+    (*str_nave).posy=519;
+    (*str_nave).fuel_level = 0;
+    (*str_nave).ship_parts = 1;
+  }
+  else
+  {
+    (*str_nave).posx=500;
+    (*str_nave).posy=519;
+    (*str_nave).fuel_level = 0;
+    (*str_nave).ship_parts = 3;
+  }
+
+}
+
+void LevelControl()
 {
-  (*str_nave).posx=500;
-  (*str_nave).posy=519;
-  (*str_nave).fuel_level = 0;
-  (*str_nave).ship_parts = 1;
+  // Cuando la nave alcance la parte superior más un poco...
+  if((*str_nave).posy < 50)
+  {
+    (*str_nave).fuel_level = 0;
+    loadingLevel = true;
+
+    // Que desaparezcan todos los enemigos
+  }
+
+  if(newLevel)
+  {
+    g_level += 1;
+    str_player.vida -= 1;
+    newLevel = false;
+    loadingLevel = false;
+
+    if(g_level == 1 || g_level == 7 || g_level == 13 || g_level == 19 )
+    {
+      InitializePieces();
+    }
+    InitializeShip();
+    PlayerInit();
+    // 4- Inicializamos bonus, enemigos, piezas/nave y jugador (en ese orden)
+
+  }
 }
 
 void ShipSpritesRelease() {
@@ -549,3 +599,4 @@ void ShipSpritesRelease() {
   esat::SpriteRelease((*combustion));
   esat::SpriteRelease((*(combustion + 1)));
 }
+
