@@ -2,8 +2,7 @@
 
 
 //INICIALIZA ENEMIGO METEORO
-//Llamar antes del bucle de juego
-
+//Llamar antes del bucle
 void InicializarMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 	
 	(*sprite) = esat::SpriteFromFile("./resources/Sprites/Enemigo_1_0_azul.png");
@@ -49,7 +48,6 @@ void InicializarMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 
 
 //MOVIMIENTO Y ANIMACION ENEMIGO METEORO
-//Llamar dentro de la funcion de dibujado
 
 void MovimientoMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 	
@@ -111,9 +109,24 @@ void MovimientoMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 	
 }
 
-
-
-
+//Llamar en la función de dibujado
+void DibujarMeteoro(){
+	
+	for(int i=0;i<4;i++){
+		
+		/*MovimientoBola((str_enemy+i));*/
+		/*esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));*/
+		MovimientoMeteoro((str_enemy+i), (Block_sprite_Enemy+i));
+		
+		if((*(str_enemy+i)).is_alive){
+			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy+i)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
+		}
+	}
+	
+	
+	// (*(str_enemy+i)).(*(
+	
+}  //VAMOH A DIBUJAR
 
 
 
