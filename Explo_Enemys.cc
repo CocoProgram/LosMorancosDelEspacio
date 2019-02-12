@@ -6,14 +6,15 @@ void ExploEnemyMemorySaved(){
   }
 }
 
-void EnemysCreateExplo(TEnemy enemy){
+void EnemysCreateExplo(TEnemy *enemy){
   bool check = false;
   for (int i=0;i<=4;i++){
-    if ((str_explo_enemys+i)->visible=false&&check==false){
-    (str_explo_enemys+i)->posx=enemy.posx;
-    (str_explo_enemys+i)->posy=enemy.posy;
+    if ((str_explo_enemys+i)->visible==false&&check==false){
+    (str_explo_enemys+i)->posx=(*(enemy)).posx;
+    (str_explo_enemys+i)->posy=(*(enemy)).posy;
     (str_explo_enemys+i)->visible=true;
     check = true;
+	(*(enemy)).my_explo = str_explo_enemys+i;
     }
   }
 }

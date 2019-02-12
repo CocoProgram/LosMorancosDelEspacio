@@ -1,3 +1,19 @@
+/*
+esat::SpriteHandle *Block_sprite_Enemy;
+
+struct TEnemy {
+	float posx, posy;
+	esat::SpriteHandle *enemy_sprites;
+	//EnemyTypes enemy_type;
+	bool is_alive;
+	float speedx, speedy;
+	int points;
+	char colour;	
+	bool phase_animation;	
+	int seg_counter = 0;	
+};
+TEnemy *str_enemy;
+*/
 
 //LLamar dentro de PreMemorySaved
 void ReservaMemoriaEnemy(){
@@ -6,7 +22,7 @@ void ReservaMemoriaEnemy(){
 				printf("ERROR AL RESERVAR LOS SPRITES DE LOS ENEMIGOS");
 	}
 	
-	if((str_enemy = (TEnemy *)calloc(4,sizeof(TEnemy)))==NULL){
+	if((str_enemy = (TEnemy *)calloc(g_num_enemy,sizeof(TEnemy)))==NULL){
 				printf("ERROR AL RESERVAR LOS ENEMIGOS");
 	}
 		
@@ -21,7 +37,13 @@ void LiberarEnemy(){
 	
 }
 
-
+void MasReservaEnemy(){
+	
+	if((str_enemy = (TEnemy *)realloc(str_enemy,(g_num_enemy*sizeof(TEnemy))))==NULL){
+				printf("ERROR AL RESERVAR LOS ENEMIGOS");
+	}
+	
+}
 
 
 void AsignacionEnemy(TEnemy *enemy, esat::SpriteHandle *sprite, int i){
@@ -36,7 +58,7 @@ void AsignacionEnemy(TEnemy *enemy, esat::SpriteHandle *sprite, int i){
 		//(*(enemy+i)).enemy_type = kEnemyTypes_2;
 		(*(enemy+i)).speedx = 0;
 		(*(enemy+i)).speedy = (-2);
-		(*(enemy+i)).points = 30;
+		
 		(*(enemy+i)).colour = ra;
 		
 		if((*(enemy+i)).posx > (kWindowX/2)){			
@@ -60,13 +82,11 @@ void AsignacionEnemy(TEnemy *enemy, esat::SpriteHandle *sprite, int i){
 	
 }
 
-
-
 bool CollisionEnemy(TEnemy enemy) {
 	//str_mapa
 	TMapa tmp;
 	
-  for(int i=1;i<=3;i++){
+  for(int i=0;i<=3;i++){
 		
 		tmp = (*(str_mapa+i));
 		
@@ -138,6 +158,90 @@ bool CollisionEnemy(TEnemy enemy) {
 			return true;
 		}
 		////
+  }
+  
+  return false;
+  
+}
+
+
+
+bool Collisionbullet(TShoot bullet) {
+	//str_mapa
+	TEnemy tmp;
+	
+  for(int i=0;i<g_num_enemy;i++){
+		
+		tmp = (*(str_enemy+i));
+		
+		if( bullet.posx + bullet.distance_max > tmp.posx 
+		&&  bullet.posx + bullet.distance_max < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&&  bullet.posy 					  > tmp.posy
+		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){
+			return true;
+		}
+		/*
+		if((bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites)))) > tmp.posx 
+		&& (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites)))) < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&&  bullet.posy 											      > tmp.posy
+		&&  bullet.posy											      < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){
+			return true;
+		}
+		
+		if((bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))  > tmp.posx 
+		&& (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))  < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) > tmp.posy
+		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){
+			return true;
+		}
+		
+		if( bullet.posx   											   > tmp.posx 
+		&&  bullet.posx  											   < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) > tmp.posy
+		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){
+			return true;
+		}
+		/*
+		if( (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))     > tmp.posx 
+		&&  (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + (esat::SpriteHeight((*(bullet.bullet_sprites)))/3)) > tmp.posy
+		&& (bullet.posy + (esat::SpriteHeight((*(bullet.bullet_sprites)))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){	
+			//printf("Colicion_1");
+			return true;
+		}
+		
+		if(  (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))        > tmp.posx 
+		&&   (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))        < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) > tmp.posy
+		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){	
+			//printf("Colicion_2");
+			return true;
+		}
+		
+		if(  bullet.posx   											         > tmp.posx 
+		&&   bullet.posx  											         < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + ((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)) > tmp.posy
+		&& (bullet.posy + ((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){	
+			//printf("Colicion_3");
+			return true;
+		}
+		
+		if(   bullet.posx   					  					        	     > tmp.posx 
+		&&    bullet.posx  							         				     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) > tmp.posy
+		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		){	
+			//printf("Colicion_4");
+			return true;
+		}
+		*/
   }
   
   return false;

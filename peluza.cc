@@ -20,19 +20,11 @@ void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 	(*(sprite+6)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_0_verde.png");
 	(*(sprite+7)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_2_1_verde.png");
 	
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
-		(*(pelusa+i)).enemy_sprites = (sprite+(2*i));
-		(*(pelusa+i)).is_alive = true;
-		(*(pelusa+i)).posx = (rand()%kWindowX);
-		(*(pelusa+i)).posy = 75 + ((kWindowY-150) / (1+rand()%5));
-		//(*(pelusa+i)).enemy_type = kEnemyTypes_1;
-		(*(pelusa+i)).speedx = 2;
-		(*(pelusa+i)).speedy = 2;
+		AsignacionEnemy(pelusa, sprite, i);
 		(*(pelusa+i)).points = 80;
-		(*(pelusa+i)).colour = i;
-		(*(pelusa+i)).phase_animation = 0;
-		(*(pelusa+i)).seg_counter = 0;
+		(*(pelusa+i)).speedx = 2;
 	}
 	
 }
@@ -75,7 +67,7 @@ void MovimientoPelusa(TEnemy *pelusa){
 	}
 	if((*(pelusa)).posx < (-55)){
 		
-		(*(pelusa)).posx = (kWindowX+55);		
+		(*(pelusa)).posx = (kWindowX);		
 		
 	}
 	
@@ -92,12 +84,22 @@ void MovimientoPelusa(TEnemy *pelusa){
 //LLamar en el loop cuando se trabaja con este tipo de enemigos
 void controlPelusa(){
 		
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
-		MovimientoPelusa((str_enemy+i));
+		if(((*(str_enemy+i)).is_alive)){
+			MovimientoPelusa((str_enemy+i));
 		
-		esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
-		
+			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy+i)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
+		}else{
+			
+			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
+				
+				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
+				(*(str_enemy+i)).seg_counter = 0;
+			}
+			
+			
+		}
 	}
 		
 }

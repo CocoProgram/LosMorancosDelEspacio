@@ -24,10 +24,10 @@ void InicializarAvion(TEnemy *Avion, esat::SpriteHandle *sprite){
 	(*(sprite+8)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_4.png");
 	(*(sprite+9)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_4_inverse.png");
 	
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(Avion, sprite, i);
-		
+		(*(Avion+i)).points = 30;
 	}
 	
 }
@@ -140,16 +140,18 @@ void MovimientoAvion(TEnemy *Avion, TPlayer player){
 		
 		if(CollisionEnemy((*(Avion)))){
 			
+			EnemysCreateExplo(Avion);
 			(*(Avion)).is_alive = false;
-			
+			(*(Avion)).seg_counter = fps_counter;
 		}
 		
 		(*(Avion)).posy += (*(Avion)).speedy;
 		
 		if(CollisionEnemy((*(Avion)))){
 			
+			EnemysCreateExplo(Avion);
 			(*(Avion)).is_alive = false;
-			
+			(*(Avion)).seg_counter = fps_counter;
 		}
 		
 		if((*(Avion)).posx > (kWindowX)){
@@ -163,7 +165,7 @@ void MovimientoAvion(TEnemy *Avion, TPlayer player){
 			
 		}
 		
-		if(((*(Avion)).posy +21) > (kWindowY-50)){
+		if(((*(Avion)).posy +21) > (kWindowY-18)){
 			
 			(*(Avion)).is_alive = false;
 			
@@ -184,7 +186,7 @@ void MovimientoAvion(TEnemy *Avion, TPlayer player){
 //LLamar en el loop cuando se trabaja con este tipo de enemigos
 void controlAvion(){
 		
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
 		if(((*(str_enemy+i)).is_alive)){
 			MovimientoAvion((str_enemy+i), str_player);
@@ -192,9 +194,10 @@ void controlAvion(){
 			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy+i)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
 		}else{
 			
-			if(fps_counter == 59){
+			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 				
 				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
+				(*(str_enemy+i)).seg_counter = 0;
 			}
 			
 			

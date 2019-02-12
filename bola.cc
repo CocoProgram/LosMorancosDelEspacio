@@ -17,19 +17,11 @@ void InicializarBola(TEnemy *bola, esat::SpriteHandle *sprite){
 	(*(sprite+6)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_3_0_verde.png");
 	(*(sprite+7)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_3_1_verde.png");
 	
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
-		(*(bola+i)).enemy_sprites = (sprite+(2*i));
-		(*(bola+i)).is_alive = true;
-		(*(bola+i)).posx = (kWindowX*(rand()%2));
-		(*(bola+i)).posy = 75 + (kWindowY / (1+rand()%5));
-		//(*(bola+i)).enemy_type = kEnemyTypes_2;
-		(*(bola+i)).speedx = 2;
-		(*(bola+i)).speedy = 2;
+		AsignacionEnemy(bola, sprite, i);
 		(*(bola+i)).points = 30;
-		(*(bola+i)).colour = i;
-		(*(bola+i)).phase_animation = 0;
-		(*(bola+i)).seg_counter = 0;
+		(*(bola+i)).speedx = 2;
 	}	
 }
 
@@ -101,12 +93,22 @@ void MovimientoBola(TEnemy *Bola){
 //LLamar en el loop cuando se trabaja con este tipo de enemigos
 void controlBola(){
 		
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
-		MovimientoBola((str_enemy+i));
+		if(((*(str_enemy+i)).is_alive)){
+			MovimientoBola((str_enemy+i));
 		
-		esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
-		
+			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy+i)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
+		}else{
+			
+			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
+				
+				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
+				(*(str_enemy+i)).seg_counter = 0;
+			}
+			
+			
+		}
 	}
 		
 }
