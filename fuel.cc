@@ -11,7 +11,7 @@ void ReleaseFuelSprite(){
 }
 
 void InitFuelPosition(){
-  if((*str_nave).ship_parts == 3 && (*str_nave).fuel_level < 6 )
+  if((*str_nave).ship_parts == 3 && (*str_nave).fuel_level < 6 && loadingLevel == false )
   {
     do{
       fuel.pos.x = rand()%(kWindowX - esat::SpriteWidth(s_fuel));
@@ -26,7 +26,7 @@ void InitFuelPosition(){
 }
 
 void DrawFuel(){
-    if( fuel.is_active && fuel.f_counter > 0){
+    if( fuel.is_active && fuel.f_counter > 0 && loadingLevel == false ){
       if(fuel.is_attached)
       {
         esat::DrawSprite(s_fuel, str_player.posx, str_player.posy);
