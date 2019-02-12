@@ -7,6 +7,8 @@
 #include <esat/input.h>
 #include <esat/sprite.h>
 #include <esat/time.h>
+#include <esat_extra/soloud/soloud.h>
+#include <esat_extra/soloud/soloud_wav.h>
 
 unsigned char fps = 60; //fps que trascurren en un segundo.
 double current_time,last_time;
@@ -14,6 +16,12 @@ unsigned char fps_counter = 0; //cuenta los fps que trascurren en un segundo.
 unsigned char seg_counter = 0;
 
 const int kWindowX = 768, kWindowY = 576;
+
+SoLoud::Soloud canal;
+//Declaración variables canal audio.
+SoLoud::Wav audio_disparo, audio_nave, audio_intro;
+
+
 
 esat::SpriteHandle *ship_1, *ship_2, *ship_3, *ship_4, *combustion, *ship_pieces_1, *ship_pieces_2, *ship_pieces_3, *ship_pieces_4; // Sprites para nave y combustion
 int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
@@ -175,10 +183,10 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Up) != NULL ? g_jetpac = true : g_jetpac = false;
   esat::IsKeyPressed(esat::kSpecialKey_Space) != NULL ? g_shoot = true : g_shoot = false;
 }
-
+#include "sound.cc"
 void PreMemorySaved(){
   LoadShipPointers();
-
+MemoriaAudio();
   MemoryForInterface();
 	BonusSpriteMemory();
   PlatformsMemoryReserved();
@@ -232,7 +240,7 @@ void Collisions () {
 }
 
 int esat::main(int argc, char **argv) {
-
+  canal.init();
 	esat::WindowInit(kWindowX,kWindowY);
   WindowSetMouseVisibility(true);
   srand(time(NULL));
@@ -256,11 +264,13 @@ int esat::main(int argc, char **argv) {
 
 	      switch (phase){
 		case kGamePhase_Menu:
+			        (audio_intro).stop();
       PrintScore();
       PrintMenu();
 		  break;
 
 		case kGamePhase_Intro:
+			      PlaySound();
 		  PrintIntro();
 		  break;
 
@@ -298,7 +308,7 @@ int esat::main(int argc, char **argv) {
   }
   SpritesRelease();
   FreeMemorySaved();
-
+  canal.deinit();
   esat::WindowDestroy();
 
   return 0;
