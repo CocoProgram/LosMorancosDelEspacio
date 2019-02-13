@@ -1,4 +1,3 @@
-
 void LoadShipPointers() { // Poner en el main de load pointers ( o no)
   str_nave = (TNave*) calloc (1, sizeof(TNave)); // Crearemos sólo un elemento a la vez.
   str_pieces = (TPieces*) calloc (3, sizeof(TPieces)); // Crearemos tres elementos a la vez
@@ -122,7 +121,7 @@ void DrawShipPieces(int lvl) {
       }
     }
   }
-  if(lvl == 7)
+  if(lvl == 5)
   {
     if((*str_pieces).is_visible) { esat::DrawSprite((*ship_pieces_2), (*str_pieces).posx, (*str_pieces).posy); }
     if((*(str_pieces + 1)).is_visible)
@@ -151,7 +150,7 @@ void DrawShipPieces(int lvl) {
       }
     }
   }
-  if(lvl == 13)
+  if(lvl == 9)
   {
     if((*str_pieces).is_visible) { esat::DrawSprite((*ship_pieces_3), (*str_pieces).posx, (*str_pieces).posy); }
     if((*(str_pieces + 1)).is_visible)
@@ -180,7 +179,7 @@ void DrawShipPieces(int lvl) {
       }
     }
   }
-  if(lvl == 19)
+  if(lvl == 13)
   {
     if((*str_pieces).is_visible) { esat::DrawSprite((*ship_pieces_4), (*str_pieces).posx, (*str_pieces).posy); }
     if((*(str_pieces + 1)).is_visible)
@@ -222,52 +221,52 @@ void DrawShip(TNave ship, int lvl){
   if(ship.ship_parts == 2)
   {
     // Cuando ship_parts sea de 2, aumentar la posy en 36
-    if(lvl <= 6) { esat::DrawSprite((*ship_1), ship.posx, ship.posy-36); }
-    if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*ship_2), ship.posx, ship.posy-36); }
-    if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*ship_3), ship.posx, ship.posy-36); }
-    if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*ship_4), ship.posx, ship.posy-36); }
+    if(lvl <= 4) { esat::DrawSprite((*ship_1), ship.posx, ship.posy-36); }
+    if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*ship_2), ship.posx, ship.posy-36); }
+    if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*ship_3), ship.posx, ship.posy-36); }
+    if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*ship_4), ship.posx, ship.posy-36); }
   }
   if(ship.ship_parts == 3)
   {
     switch (fuel) {
       case 0:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 1)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 1)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 1)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 1)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 1)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 1)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 1)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 1)), ship.posx, ship.posy-72); }
       break;
       case 1:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 2)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 2)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 2)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 2)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 2)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 2)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 2)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 2)), ship.posx, ship.posy-72); }
       break;
       case 2:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 3)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 3)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 3)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 3)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 3)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 3)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 3)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 3)), ship.posx, ship.posy-72); }
       break;
       case 3:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 4)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 4)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 4)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 4)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 4)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 4)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 4)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 4)), ship.posx, ship.posy-72); }
       break;
       case 4:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 5)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 5)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 5)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 5)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 5)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 5)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 5)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 5)), ship.posx, ship.posy-72); }
       break;
       case 5:
-      if(lvl <= 6) { esat::DrawSprite((*(ship_1 + 6)), ship.posx, ship.posy-72); }
-      if(lvl > 6 && lvl <= 12) { esat::DrawSprite((*(ship_2 + 6)), ship.posx, ship.posy-72); }
-      if(lvl > 12 && lvl <= 18) { esat::DrawSprite((*(ship_3 + 6)), ship.posx, ship.posy-72); }
-      if(lvl > 18 && lvl <= 24) { esat::DrawSprite((*(ship_4 + 6)), ship.posx, ship.posy-72); }
+      if(lvl <= 4) { esat::DrawSprite((*(ship_1 + 6)), ship.posx, ship.posy-72); }
+      if(lvl > 4 && lvl <= 8) { esat::DrawSprite((*(ship_2 + 6)), ship.posx, ship.posy-72); }
+      if(lvl > 8 && lvl <= 12) { esat::DrawSprite((*(ship_3 + 6)), ship.posx, ship.posy-72); }
+      if(lvl > 12 && lvl <= 16) { esat::DrawSprite((*(ship_4 + 6)), ship.posx, ship.posy-72); }
       break;
       case 6:
-      if(lvl <= 6) {
+      if(lvl <= 4) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_1 + 7)), ship.posx, ship.posy-72);
@@ -276,7 +275,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_1 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 6 && lvl <= 12) {
+      if(lvl > 4 && lvl <= 8) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_2 + 7)), ship.posx, ship.posy-72);
@@ -286,7 +285,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_2 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 12 && lvl <= 18) {
+      if(lvl > 8 && lvl <= 12) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_3 + 7)), ship.posx, ship.posy-72);
@@ -296,7 +295,7 @@ void DrawShip(TNave ship, int lvl){
           esat::DrawSprite((*(ship_3 + 1)), ship.posx, ship.posy-72);
         }
       }
-      if(lvl > 18 && lvl <= 24) {
+      if(lvl > 12 && lvl <= 16) {
         if(fps_counter >= 1 && fps_counter <=30)
         {
           esat::DrawSprite((*(ship_4 + 7)), ship.posx, ship.posy-72);
@@ -344,7 +343,7 @@ void PlayerInShip()
   }
 
   // Si está arriba, para que baje. (sabemos que esta arriba por el fuel y el show player)
-  if(g_level == 24 && (*str_nave).fuel_level == 0 && str_player.show_player == false && (*str_nave).posy < 519)
+  if(g_level == 16 && (*str_nave).fuel_level == 0 && str_player.show_player == false && (*str_nave).posy < 519)
   {
     newLevel = true;
     g_level = 0;
@@ -495,7 +494,7 @@ void InitializePieces(){
 }
 
 void InitializeShip(){
-  if(g_level == 1 || g_level == 7 || g_level == 13 || g_level == 19 )
+  if(g_level == 1 || g_level == 5 || g_level == 9 || g_level == 13 )
   {
     (*str_nave).posx=500;
     (*str_nave).posy=519;
@@ -530,7 +529,7 @@ void LevelControl()
     newLevel = false;
     loadingLevel = false;
 
-    if(g_level == 1 || g_level == 7 || g_level == 13 || g_level == 19 )
+    if(g_level == 1 || g_level == 5 || g_level == 9 || g_level == 13 )
     {
       InitializePieces();
     }
@@ -599,4 +598,3 @@ void ShipSpritesRelease() {
   esat::SpriteRelease((*combustion));
   esat::SpriteRelease((*(combustion + 1)));
 }
-
