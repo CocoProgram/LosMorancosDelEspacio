@@ -1,4 +1,4 @@
-# Al subir vuestro CÓDIGO, introducir el include en el main
+# Al subir vuestro CÓDIGO, introducid el include en el main
 # Archivos a incluir (13/02/19 1:45am)
 PRINCIPAL: 
 - main_jetpac.cc
