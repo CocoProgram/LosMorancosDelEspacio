@@ -1,5 +1,5 @@
 
-bool CollisionPlayer(TPlayer Player) {
+bool CollisionPlayerEnemy(TPlayer Player) {
 	//str_mapa
 	TEnemy tmp;
 	
