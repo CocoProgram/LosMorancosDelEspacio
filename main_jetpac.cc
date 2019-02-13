@@ -206,6 +206,7 @@ void PreMemorySaved(){
   PlayerMemorySaved();
   PropulsionMemorySaved();
   ReservaMemoriaEnemy();
+  ExploEnemyMemorySaved();
 }
 
 void FreeMemorySaved(){
@@ -217,6 +218,7 @@ void FreeMemorySaved(){
   PlayerFreeMemory();
   PropulsionFreeMemory();
   LiberarEnemy();
+	ExploEnemyMemoryFree();
 }
 
 void InitializeParametres(){
@@ -233,6 +235,7 @@ void LoadSprites(){
 	BonusSpritesLoad();
   PlaformsLoadSprites();
   PlayerLoadSprites();
+	ExploLoadSprites();
 }
 void SpritesRelease() {
 ShipSpritesRelease();
@@ -245,6 +248,8 @@ void DrawingSprites(){
   PlatformsDraw();
   PropulsionDraw();
   PlayerDraw();
+	DrawExplos();
+	ExploEnemyAnimations();
 }
 
 void Collisions () {
