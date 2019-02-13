@@ -7,10 +7,10 @@ bool CollisionPlayer(TPlayer Player) {
 		
 		tmp = (*(str_enemy+i));
 		
-		if( Player.posx + kWindowX*0.75 > tmp.posx 
-		&&  Player.posx + kWindowX*0.75 < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&&  Player.posy 					  > tmp.posy
-		&&  Player.posy 					  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		if( Player.posx  > tmp.posx 
+		&&  Player.posx  < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&&  Player.posy  > tmp.posy
+		&&  Player.posy  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){
 			return true;
 		}
