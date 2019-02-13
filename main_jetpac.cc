@@ -85,9 +85,15 @@ struct TPropulsion{
 TPropulsion str_propulsion, *str_explo_enemys;
 
 struct TShoot {
-  float posx, posy;
-  //Metodo de dibujado desconocido.
- float distance_max;
+ float posx;
+ float posy;
+ esat::SpriteHandle s_sub_shot;
+ float length;
+ float right_bullet;
+ float distance;
+ float speed;
+ bool shot;
+ bool direction;
  bool collision;
 };
 TShoot *str_shoot;
