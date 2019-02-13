@@ -200,14 +200,14 @@ void PlayerFlyingMovement(TPlayer *player){
     }
   }
 
-  if(player->speed_walk>=4){
+  if(player->speed_walk>=5){
 
-    player->speed_walk=4;
+    player->speed_walk=5;
   }
 
-  if(player->speed_walk<=-4){
+  if(player->speed_walk<=-5){
 
-    player->speed_walk=-4;
+    player->speed_walk=-5;
   }
 
   player->posx+=player->speed_walk;
@@ -232,7 +232,7 @@ void PlayerAnimations(TPlayer *player){
   {
     if(g_left || g_right)
     {
-      if(fps_counter%5==0)
+      if(fps_counter%3==0)
       {
         player->loop++;
       }
@@ -241,7 +241,7 @@ void PlayerAnimations(TPlayer *player){
   else
   {
     stage+=2;
-    if(fps_counter%5==0)
+    if(fps_counter%3==0)
     {
       player->loop++;
     }
