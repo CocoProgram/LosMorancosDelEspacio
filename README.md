@@ -33,14 +33,14 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 # LosMorancosDelEspacio
 
 Alex & Pablo:
-- Interfaz, Cohete, Bonus Fuel
+- Interfaz, Cohete, Fuel, Gestión de niveles
 
 JC & Alejandro:
-- Jugador y Disparo
+- Jugador, Disparo, Animaciones
 
 Luciano & Nacho:
 - Enemigos
 
 Carlos:
-- Sprites y Bonus
+- Sprites, Bonus, Sonido
 
