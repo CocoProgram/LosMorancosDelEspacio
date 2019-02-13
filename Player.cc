@@ -337,7 +337,7 @@ void PlayerInit(){
 
   str_player.posx=450;   str_player.posy=500;  str_player.phase_animation=0;
   str_player.speed_walk=0; str_player.loop=0;  str_player.direction=0;
-  str_player.show_player = true;
+  str_player.show_player = true; str_player.can_grab = true;
 }
 
 void PlayerFunctions(){
