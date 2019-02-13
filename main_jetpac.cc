@@ -23,6 +23,7 @@ SoLoud::Wav audio_disparo, audio_nave, audio_intro;
 
 esat::SpriteHandle *ship_1, *ship_2, *ship_3, *ship_4, *combustion, *ship_pieces_1, *ship_pieces_2, *ship_pieces_3, *ship_pieces_4; // Sprites para nave y combustion
 esat::SpriteHandle *Block_sprite_Enemy;//Sprites de los enemigos.
+esat::SpriteHandle *s_shots;//Sprites de los disparos.
 int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
 bool newLevel = false; // Usaremos esto para INICIALIZAR enemigos, bonus y fuel
 bool loadingLevel = false; // Usaremos esto a TRUE para hacer desaparecer enemigos, etc
