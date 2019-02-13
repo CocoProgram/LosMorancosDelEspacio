@@ -2,7 +2,7 @@
 
 
 //INICIALIZA ENEMIGO CRUZ
-//Llamar antes del bucle de juego
+//Llamar en el fichero "controlEnemy.cc", dentro de la función InicializarEnemyLevel, en el nivel 6. 
 void InicializarCruz(TEnemy *cruz, esat::SpriteHandle *sprite) {
 	
 	(*sprite) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_azul.png");
@@ -173,7 +173,7 @@ void MovimientoCruz(TEnemy *cruz) {
 
 
 
-//Llamar en la funcion de dibujado
+//Llamar en el fichero "controlEnemy.cc", dentro de la función ControlEnemyLevel, en el nivel 6.
 void controlCruces(){
 	
 	for(int i=0;i<g_num_enemy;i++){
