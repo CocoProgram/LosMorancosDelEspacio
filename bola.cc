@@ -1,7 +1,7 @@
 
 
 //INICIALIZACION DEL ENEMIGO BOLA
-//LLamar antes de empezar el nivel que contenga este tipo de enemigo
+////Se llama dentro de controlEnemy.cc
 void InicializarBola(TEnemy *bola, esat::SpriteHandle *sprite){
 	
 	
@@ -90,7 +90,7 @@ void MovimientoBola(TEnemy *Bola){
 	
 }
 
-//LLamar en el loop cuando se trabaja con este tipo de enemigos
+//Se llama dentro de controlEnemy.cc
 void controlBola(){
 		
 	for(int i=0;i<g_num_enemy;i++){
@@ -104,7 +104,7 @@ void controlBola(){
 			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 				
 				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
-				(*(str_enemy+i)).seg_counter = 0;
+				//(*(str_enemy+i)).seg_counter = 0;
 			}
 			
 			

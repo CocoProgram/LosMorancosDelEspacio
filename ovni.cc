@@ -1,6 +1,6 @@
 
 //INICIALIZACION DEL ENEMIGO OVNI
-//LLamar antes de empezar el nivel que contenga este tipo de enemigo
+//Se llama dentro de controlEnemy.cc
 void InicializarOvni(TEnemy *Ovni, esat::SpriteHandle *sprite){
 	
 	
@@ -215,7 +215,7 @@ void MovimientoOvni(TEnemy *Ovni, TPlayer player){
 	
 }
 
-//LLamar en el loop cuando se trabaja con este tipo de enemigos
+//Se llama dentro de controlEnemy.cc
 void controlOvni(){
 		
 	for(int i=0;i<g_num_enemy;i++){
@@ -229,7 +229,7 @@ void controlOvni(){
 			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 				
 				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
-				(*(str_enemy+i)).seg_counter = 0;
+				//(*(str_enemy+i)).seg_counter = 0;
 			}
 			
 			

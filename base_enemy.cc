@@ -56,8 +56,8 @@ void AsignacionEnemy(TEnemy *enemy, esat::SpriteHandle *sprite, int i){
 		
 		(*(enemy+i)).posy = 75 + ((kWindowY-150) / (1+rand()%5));
 		//(*(enemy+i)).enemy_type = kEnemyTypes_2;
-		(*(enemy+i)).speedx = 0;
-		(*(enemy+i)).speedy = (-2);
+		(*(enemy+i)).speedx = (-2+rand()%5);
+		(*(enemy+i)).speedy = (-2+rand()%5);
 		
 		(*(enemy+i)).colour = ra;
 		
