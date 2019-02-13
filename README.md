@@ -1,5 +1,5 @@
-# AL SUBIR VUESTRO INCLUDE, ACORDARSE DE INCLUIRLO EN EL ARCHIVO MAIN
-# Archivos a incluir ( de momento )
+# Al subir vuestro CÓDIGO, introducir el include en el main
+# Archivos a incluir (13/02/19 1:45am)
 PRINCIPAL: 
 - main_jetpac.cc
 
@@ -10,10 +10,25 @@ INCLUDES:
 - platforms.cc
 - rocket.cc
 - fuel.cc
+- avion.cc
+- Explo_Enemys.cc
+- base_enemy.cc
+- bola.cc
+- controlEnemy.cc
+- meteoros.cc
+- ovni.cc
+- peluza.cc
+- sound.cc
 
 RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VARIABLES GLOBALES EN EL ARCHIVO PRINCIPAL.    
 TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
+# TO DO
+- Terminar Enemigos e incluirlos en controlEnemy correctamente
+- Colisión Enemigo-Player
+- Disparo
+- Sonido
+- Gestión de niveles (falta si hay más de un jugador, y cuando el jugador muere en partida.)
 
 # LosMorancosDelEspacio
 
@@ -28,10 +43,4 @@ Luciano & Nacho:
 
 Carlos:
 - Sprites y Bonus
-
-TO DO:
-- Gestión de niveles (falta si hay más de un jugador, el resto ya está, hay que incluir los enemigos.)
-- Enemigos y Movimiento de los enemigos
-- Disparo
-- Sonido
 
