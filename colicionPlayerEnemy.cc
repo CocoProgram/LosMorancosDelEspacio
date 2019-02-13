@@ -15,43 +15,43 @@ bool CollisionPlayer(TPlayer Player) {
 			return true;
 		}
 		
-		if((Player.posx + esat::SpriteWidth((*(Player.Player_sprites)))) > tmp.posx 
-		&& (Player.posx + esat::SpriteWidth((*(Player.Player_sprites)))) < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		if((Player.posx + esat::SpriteWidth((*(Player.player_sprites)))) > tmp.posx 
+		&& (Player.posx + esat::SpriteWidth((*(Player.player_sprites)))) < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
 		&&  Player.posy 											      > tmp.posy
 		&&  Player.posy											      < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){
 			return true;
 		}
 		
-		if((Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))  > tmp.posx 
-		&& (Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))  < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + esat::SpriteHeight((*(Player.Player_sprites)))) > tmp.posy
-		&& (Player.posy + esat::SpriteHeight((*(Player.Player_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		if((Player.posx + esat::SpriteWidth((*(Player.player_sprites))))  > tmp.posx 
+		&& (Player.posx + esat::SpriteWidth((*(Player.player_sprites))))  < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (Player.posy + esat::SpriteHeight((*(Player.player_sprites)))) > tmp.posy
+		&& (Player.posy + esat::SpriteHeight((*(Player.player_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){
 			return true;
 		}
 		
 		if( Player.posx   											   > tmp.posx 
 		&&  Player.posx  											   < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + esat::SpriteHeight((*(Player.Player_sprites)))) > tmp.posy
-		&& (Player.posy + esat::SpriteHeight((*(Player.Player_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		&& (Player.posy + esat::SpriteHeight((*(Player.player_sprites)))) > tmp.posy
+		&& (Player.posy + esat::SpriteHeight((*(Player.player_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){
 			return true;
 		}
 		
-		if( (Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))     > tmp.posx 
-		&&  (Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + (esat::SpriteHeight((*(Player.Player_sprites)))/3)) > tmp.posy
-		&& (Player.posy + (esat::SpriteHeight((*(Player.Player_sprites)))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		if( (Player.posx + esat::SpriteWidth((*(Player.player_sprites))))     > tmp.posx 
+		&&  (Player.posx + esat::SpriteWidth((*(Player.player_sprites))))     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (Player.posy + (esat::SpriteHeight((*(Player.player_sprites)))/3)) > tmp.posy
+		&& (Player.posy + (esat::SpriteHeight((*(Player.player_sprites)))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){	
 			//printf("Colicion_1");
 			return true;
 		}
 		
-		if(  (Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))        > tmp.posx 
-		&&   (Player.posx + esat::SpriteWidth((*(Player.Player_sprites))))        < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + (((esat::SpriteHeight((*(Player.Player_sprites))))/3)*2)) > tmp.posy
-		&& (Player.posy + (((esat::SpriteHeight((*(Player.Player_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		if(  (Player.posx + esat::SpriteWidth((*(Player.player_sprites))))        > tmp.posx 
+		&&   (Player.posx + esat::SpriteWidth((*(Player.player_sprites))))        < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&& (Player.posy + (((esat::SpriteHeight((*(Player.player_sprites))))/3)*2)) > tmp.posy
+		&& (Player.posy + (((esat::SpriteHeight((*(Player.player_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){	
 			//printf("Colicion_2");
 			return true;
@@ -59,8 +59,8 @@ bool CollisionPlayer(TPlayer Player) {
 		
 		if(  Player.posx   											         > tmp.posx 
 		&&   Player.posx  											         < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + ((esat::SpriteHeight((*(Player.Player_sprites))))/3)) > tmp.posy
-		&& (Player.posy + ((esat::SpriteHeight((*(Player.Player_sprites))))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		&& (Player.posy + ((esat::SpriteHeight((*(Player.player_sprites))))/3)) > tmp.posy
+		&& (Player.posy + ((esat::SpriteHeight((*(Player.player_sprites))))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){	
 			//printf("Colicion_3");
 			return true;
@@ -68,8 +68,8 @@ bool CollisionPlayer(TPlayer Player) {
 		
 		if(   Player.posx   					  					        	     > tmp.posx 
 		&&    Player.posx  							         				     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (Player.posy + (((esat::SpriteHeight((*(Player.Player_sprites))))/3)*2)) > tmp.posy
-		&& (Player.posy + (((esat::SpriteHeight((*(Player.Player_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		&& (Player.posy + (((esat::SpriteHeight((*(Player.player_sprites))))/3)*2)) > tmp.posy
+		&& (Player.posy + (((esat::SpriteHeight((*(Player.player_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){	
 			//printf("Colicion_4");
 			return true;
