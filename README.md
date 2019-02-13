@@ -20,12 +20,14 @@ INCLUDES:
 - peluza.cc
 - sound.cc
 - cruces.cc
+- sapo.cc
+- alcon.cc
+
 
 RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VARIABLES GLOBALES EN EL ARCHIVO PRINCIPAL.    
 TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
-- Terminar Enemigos e incluirlos en controlEnemy correctamente
 - Colisión Enemigo-Player
 - Colision Bala-Enemigo
 - Sonido
