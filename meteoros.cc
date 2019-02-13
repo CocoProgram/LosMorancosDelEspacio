@@ -36,7 +36,11 @@ void InicializarMeteoro(TEnemy *meteoro, esat::SpriteHandle *sprite) {
 		AsignacionEnemy(meteoro, sprite, i);		
 		(*(meteoro+i)).points = 25;
 		
-		if((*(meteoro+i)).speedx == 0){(*(meteoro+i)).speedx = 2;}
+		(*(meteoro+i)).speedx = (6*(rand()%2))-3;
+		if((*(meteoro+i)).speedx == 0){
+			(*(meteoro+i)).speedx = 2;
+		}		
+		(*(meteoro+i)).speedy = (0.25 * (1+rand()%4));
 		
 		if((*(meteoro+i)).speedx < 0){
 			
@@ -107,13 +111,10 @@ void MovimientoMeteoro(TEnemy *meteoro) {
 	
 }
 
-//Llamar en la función de dibujado
 void DibujarMeteoro(){
 	
 	for(int i=0;i<4;i++){
 		
-		/*MovimientoBola((str_enemy+i));*/
-		/*esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));*/
 		if((*(str_enemy+i)).is_alive){
 			MovimientoMeteoro((str_enemy+i));		
 			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy+i)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
@@ -122,10 +123,12 @@ void DibujarMeteoro(){
 			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 				
 				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
-				//(*(str_enemy+i)).seg_counter = 0;
 				
-				if((*(str_enemy+i)).speedx == 0){(*(str_enemy+i)).speedx = 2;}
-				if((*(str_enemy+i)).speedy == 0){(*(str_enemy+i)).speedy = 1;}
+				(*(str_enemy+i)).speedx = (6*(rand()%2))-3;
+				if((*(str_enemy+i)).speedx == 0){
+					(*(str_enemy+i)).speedx = 2;
+				}		
+				(*(str_enemy+i)).speedy = (0.25 * (1+rand()%4));
 		
 				if((*(str_enemy+i)).speedx < 0){
 			
@@ -140,6 +143,6 @@ void DibujarMeteoro(){
 	}
 	
 	
-	// (*(str_enemy+i)).(*(
 	
-}  //VAMOH A DIBUJAR
+	
+}  

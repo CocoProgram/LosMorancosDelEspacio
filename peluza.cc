@@ -3,7 +3,7 @@
 
 
 //INICIALIZACION DEL ENEMIGO PELUZA
-//LLamar antes de empezar el nivel que contenga este tipo de enemigo
+////Se llama dentro de controlEnemy.cc
 void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 	
 	
@@ -81,7 +81,7 @@ void MovimientoPelusa(TEnemy *pelusa){
 	
 }
 
-//LLamar en el loop cuando se trabaja con este tipo de enemigos
+//Se llama dentro de controlEnemy.cc
 void controlPelusa(){
 		
 	for(int i=0;i<g_num_enemy;i++){
@@ -95,7 +95,7 @@ void controlPelusa(){
 			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 				
 				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
-				(*(str_enemy+i)).seg_counter = 0;
+				//(*(str_enemy+i)).seg_counter = 0;
 			}
 			
 			
