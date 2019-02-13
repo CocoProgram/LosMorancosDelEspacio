@@ -180,11 +180,14 @@ void TimeInFps(){
 #include "bonus.cc"
 
 #include "base_enemy.cc"
+#include "meteoros.cc"
 #include "peluza.cc"
 #include "bola.cc"
 #include "avion.cc"
 #include "ovni.cc"
 
+#include "alcon.cc"
+#include "sapo.cc"
 #include "controlEnemy.cc" //Debe estar al final de los include de los enemy
 #include "rocket.cc"
 
