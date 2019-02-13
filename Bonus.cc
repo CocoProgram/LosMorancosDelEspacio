@@ -29,7 +29,6 @@ void BonusSpawn(float gravedad){
     str_bonus.coll_bonus = false;
   } else if(str_bonus.is_alive == false && loadingLevel == false && fps_counter==30) {
       bonus_random_spawn = rand()%1001;
-printf("%d\n",bonus_random_spawn );
         if(bonus_random_spawn <= 50){
             str_bonus.coll_bonus = false;
             str_bonus.type_bonus = kBonusType_0;
