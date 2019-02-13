@@ -2,7 +2,7 @@ void ExploEnemyMemorySaved(){
   str_explo_enemys = (TPropulsion*) calloc(5,sizeof(TPropulsion));
 
   for(int i=0;i<=4;i++){
-    (str_explo_enemys+i)->propulsion_sprites = (esat::SpriteHandle*)calloc(3,sizeof(esat::SpriteHandle));
+    (str_explo_enemys+i)->propulsion_sprites = (esat::SpriteHandle*)calloc(4,sizeof(esat::SpriteHandle));
   }
 }
 
@@ -22,8 +22,8 @@ void EnemysCreateExplo(TEnemy *enemy){
 void ExploEnemyAnimations(){
   for (int i=0;i<=4;i++){
     if ((str_explo_enemys+i)->visible){
-      if (fps_counter%20==0){
-        if((str_explo_enemys+i)->phase_animation==2){
+      if (fps_counter%5==0){
+        if((str_explo_enemys+i)->phase_animation==3){
           (str_explo_enemys+i)->visible=false;
           (str_explo_enemys+i)->phase_animation=0;
         }else{(str_explo_enemys+i)->phase_animation++;}
@@ -37,6 +37,8 @@ void ExploLoadSprites(){
     (str_explo_enemys+i)->propulsion_sprites[0] = esat::SpriteFromFile("./resources/Sprites/Explosion_0.png");
     (str_explo_enemys+i)->propulsion_sprites[1] = esat::SpriteFromFile("./resources/Sprites/Explosion_1.png");
     (str_explo_enemys+i)->propulsion_sprites[2] = esat::SpriteFromFile("./resources/Sprites/Explosion_2.png");
+    (str_explo_enemys+i)->propulsion_sprites[3] = esat::SpriteFromFile("./resources/Sprites/Explosion_3.png");
+
   }
 }
 

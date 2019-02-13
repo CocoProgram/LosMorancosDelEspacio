@@ -26,7 +26,7 @@ void PlasmaLasers(TPlayer *player){
         found=true;
       }
     }
-    
+
   }
 }
 
@@ -44,7 +44,7 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->distance<kWindowX*0.75){
 
-          (str_shoot+i)->posx-=(str_shoot+i)->speed; 
+          (str_shoot+i)->posx-=(str_shoot+i)->speed;
         }
 
           if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length>0){
@@ -57,14 +57,14 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75){
 
-          (str_shoot+i)->length+=(str_shoot+i)->speed; 
+          (str_shoot+i)->length+=(str_shoot+i)->speed;
         }
 
         if((str_shoot+i)->length>esat::SpriteWidth(*s_shots)){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-        
+
         if((str_shoot+i)->posx<-144){
 
           (str_shoot+i)->posx=kWindowX+144;
@@ -74,7 +74,7 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->distance<kWindowX*0.75){
 
-          (str_shoot+i)->posx+=(str_shoot+i)->speed; 
+          (str_shoot+i)->posx+=(str_shoot+i)->speed;
         }
 
 
@@ -98,7 +98,7 @@ void LaserMovement(TPlayer *player){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-        
+
         if((str_shoot+i)->posx>kWindowX+144){
 
         (str_shoot+i)->posx=-144;
@@ -114,7 +114,7 @@ void DrawLasers(){
 
     if((str_shoot+i)->shot){
 
-      
+
 
       if(!(str_shoot+i)->direction){
         (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),0,0
@@ -254,8 +254,8 @@ void PlayerAnimations(TPlayer *player){
 
 void PropulsionAnimations(TPropulsion *propulsion){
   if (propulsion->visible){
-    if (fps_counter%20==0){
-      if(propulsion->phase_animation==2){
+    if (fps_counter%5==0){
+      if(propulsion->phase_animation==3){
         propulsion->visible=false;
         propulsion->phase_animation=0;
       }else{propulsion->phase_animation++;}
@@ -266,7 +266,7 @@ void PropulsionAnimations(TPropulsion *propulsion){
 void PlayerMemorySaved(){
 
   str_player.player_sprites = (esat::SpriteHandle*) calloc (16, sizeof(esat::SpriteHandle));
-    
+
   str_shoot = (TShoot*) calloc (laser_quantity,sizeof(TShoot));
 
   s_shots = (esat::SpriteHandle*) calloc(2,sizeof(esat::SpriteHandle));
@@ -275,7 +275,7 @@ void PlayerMemorySaved(){
 void PlayerFreeMemory(){
 
   free(str_player.player_sprites);
-    
+
   free(str_shoot);
 
   free(s_shots);
@@ -299,19 +299,21 @@ void PlayerLoadSprites(){
   *((str_player.player_sprites)+13) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_5.png");
   *((str_player.player_sprites)+14) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_6.png");
   *((str_player.player_sprites)+15) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_7.png");
-    
+
   *s_shots = esat::SpriteFromFile("./resources/Sprites/Disparo_I.png");
   *(s_shots+1) = esat::SpriteFromFile("./resources/Sprites/Disparo_D.png");
 }
 
 void PropulsionMemorySaved(){
-  str_propulsion.propulsion_sprites = (esat::SpriteHandle*) calloc (3, sizeof(esat::SpriteHandle));
+  str_propulsion.propulsion_sprites = (esat::SpriteHandle*) calloc (4, sizeof(esat::SpriteHandle));
 }
 
 void PropulsionLoadSprites(){
   *(str_propulsion.propulsion_sprites) = esat::SpriteFromFile("./resources/Sprites/Explosion_0.png");
   *((str_propulsion.propulsion_sprites)+1) = esat::SpriteFromFile("./resources/Sprites/Explosion_1.png");
   *((str_propulsion.propulsion_sprites)+2) = esat::SpriteFromFile("./resources/Sprites/Explosion_2.png");
+  *((str_propulsion.propulsion_sprites)+3) = esat::SpriteFromFile("./resources/Sprites/Explosion_3.png");
+
 }
 
 void PropulsionDraw(){
@@ -338,6 +340,10 @@ void PlayerInit(){
   str_player.posx=450;   str_player.posy=500;  str_player.phase_animation=0;
   str_player.speed_walk=0; str_player.loop=0;  str_player.direction=0;
   str_player.show_player = true; str_player.can_grab = true;
+
+  for(int i=0;i<laser_quantity;++i) {
+    (str_shoot+i)->shot=false;
+  }
 }
 
 void PlayerFunctions(){
