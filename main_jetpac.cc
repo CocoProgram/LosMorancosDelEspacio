@@ -283,12 +283,13 @@ int esat::main(int argc, char **argv) {
 		  break;
 
 		case kGamePhase_Intro:
-      PlaySound();
+        MenuBackgroundSound();
       PrintIntro();
 		  break;
 
 		case kGamePhase_InGame:
       PrintScore();
+	PlaySound();
 		  BoleanasTeclas();
       DrawingSprites();
       PlayerFunctions();
