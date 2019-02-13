@@ -1,3 +1,137 @@
+const int laser_quantity = 30;
+
+void PlasmaLasers(TPlayer *player){
+
+  bool  found=false;
+
+  if(g_shoot){
+
+    for(int i=0;i<laser_quantity;++i){
+      if(!found && !(str_shoot+i)->shot){
+
+        (str_shoot+i)->posy=player->posy+(esat::SpriteHeight(*((player->player_sprites)+player->phase_animation))/2)-2;
+        (str_shoot+i)->speed=24;
+        (str_shoot+i)->distance=0;
+        (str_shoot+i)->direction=player->direction;
+        (str_shoot+i)->length=0;
+        if(!(str_shoot+i)->direction){
+
+          (str_shoot+i)->posx=player->posx;
+        }else{
+
+          (str_shoot+i)->posx=player->posx+31;
+          (str_shoot+i)->right_bullet=288;
+        }
+        (str_shoot+i)->shot=true;
+        found=true;
+      }
+    }
+    
+  }
+}
+
+void LaserMovement(TPlayer *player){
+
+  for(int i=0;i<laser_quantity;++i){
+
+    if((str_shoot+i)->shot){
+
+      if((str_shoot+i)->posx>0 && (str_shoot+i)->posx<kWindowX){
+        (str_shoot+i)->distance+=(str_shoot+i)->speed;
+      }
+
+      if(!(str_shoot+i)->direction){
+
+        if((str_shoot+i)->distance<kWindowX*0.75){
+
+          (str_shoot+i)->posx-=(str_shoot+i)->speed; 
+        }
+
+          if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length>0){
+            (str_shoot+i)->length-=(str_shoot+i)->speed;
+          }
+
+          if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length<=0){
+            (str_shoot+i)->shot=false;
+          }
+
+        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75){
+
+          (str_shoot+i)->length+=(str_shoot+i)->speed; 
+        }
+
+        if((str_shoot+i)->length>esat::SpriteWidth(*s_shots)){
+
+          (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
+        }
+        
+        if((str_shoot+i)->posx<-144){
+
+          (str_shoot+i)->posx=kWindowX+144;
+        }
+
+      }else{
+
+        if((str_shoot+i)->distance<kWindowX*0.75){
+
+          (str_shoot+i)->posx+=(str_shoot+i)->speed; 
+        }
+
+
+
+        if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length>0){
+          (str_shoot+i)->length-=(str_shoot+i)->speed;
+          (str_shoot+i)->right_bullet+=(str_shoot+i)->speed;
+        }
+
+        if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length<=0){
+          (str_shoot+i)->shot=false;
+        }
+
+        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75){
+
+          (str_shoot+i)->length+=(str_shoot+i)->speed;
+          (str_shoot+i)->right_bullet-=(str_shoot+i)->speed;
+        }
+
+        if((str_shoot+i)->length>esat::SpriteWidth(*s_shots)){
+
+          (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
+        }
+        
+        if((str_shoot+i)->posx>kWindowX+144){
+
+        (str_shoot+i)->posx=-144;
+        }
+      }
+    }
+  }
+}
+
+void DrawLasers(){
+
+  for(int i=0;i<laser_quantity;++i){
+
+    if((str_shoot+i)->shot){
+
+      
+
+      if(!(str_shoot+i)->direction){
+        (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),0,0
+      ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
+
+        esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx,(str_shoot+i)->posy);
+      }else{
+
+        (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),str_shoot->right_bullet,0
+      ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
+
+        esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx-(str_shoot+i)->length,(str_shoot+i)->posy);
+      }
+    }
+  }
+}
+
 void PlayerCreatePropulsion(){
     if(!(str_player.is_flying)&&g_jetpac&&str_propulsion.visible==false){
       str_propulsion.posx=str_player.posx-5;
@@ -132,11 +266,19 @@ void PropulsionAnimations(TPropulsion *propulsion){
 void PlayerMemorySaved(){
 
   str_player.player_sprites = (esat::SpriteHandle*) calloc (16, sizeof(esat::SpriteHandle));
+    
+  str_shoot = (TShoot*) calloc (laser_quantity,sizeof(TShoot));
+
+  s_shots = (esat::SpriteHandle*) calloc(2,sizeof(esat::SpriteHandle));
 }
 
 void PlayerFreeMemory(){
 
   free(str_player.player_sprites);
+    
+  free(str_shoot);
+
+  free(s_shots);
 }
 
 void PlayerLoadSprites(){
@@ -157,6 +299,9 @@ void PlayerLoadSprites(){
   *((str_player.player_sprites)+13) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_5.png");
   *((str_player.player_sprites)+14) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_6.png");
   *((str_player.player_sprites)+15) = esat::SpriteFromFile("./resources/Sprites/Astronauta_JetPac_7.png");
+    
+  *s_shots = esat::SpriteFromFile("./resources/Sprites/Disparo_I.png");
+  *(s_shots+1) = esat::SpriteFromFile("./resources/Sprites/Disparo_D.png");
 }
 
 void PropulsionMemorySaved(){
@@ -183,6 +328,7 @@ void PropulsionFreeMemory(){
 void PlayerDraw(){
   if(str_player.show_player)
   {
+    DrawLasers();
     esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
   }
 }
@@ -206,6 +352,8 @@ void PlayerFunctions(){
   PlayerMovementLimits(&str_player);
   PlayerAnimations(&str_player);
   PropulsionAnimations(&str_propulsion);
+  PlasmaLasers(&str_player);
+  LaserMovement(&str_player);
 }
 
 void CollisionPlayer() {
