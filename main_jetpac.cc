@@ -185,6 +185,7 @@ void TimeInFps(){
 #include "bola.cc"
 #include "avion.cc"
 #include "ovni.cc"
+#include "cruces.cc"
 
 #include "alcon.cc"
 #include "sapo.cc"
