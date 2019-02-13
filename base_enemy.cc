@@ -174,8 +174,8 @@ bool Collisionbullet(TShoot bullet) {
 		
 		tmp = (*(str_enemy+i));
 		
-		if( bullet.posx + bullet.distance_max > tmp.posx 
-		&&  bullet.posx + bullet.distance_max < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		if( bullet.posx + kWindowX*0.75 > tmp.posx 
+		&&  bullet.posx + kWindowX*0.75 < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
 		&&  bullet.posy 					  > tmp.posy
 		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){
