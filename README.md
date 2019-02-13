@@ -26,7 +26,7 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 # TO DO
 - Terminar Enemigos e incluirlos en controlEnemy correctamente
 - Colisión Enemigo-Player
-- Disparo
+- Colision Bala-Enemigo
 - Sonido
 - Gestión de niveles (falta si hay más de un jugador, y cuando el jugador muere en partida.)
 
