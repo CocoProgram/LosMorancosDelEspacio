@@ -1,5 +1,4 @@
 
-
 void LoadShipPointers() { // Poner en el main de load pointers ( o no)
   str_nave = (TNave*) calloc (1, sizeof(TNave)); // Crearemos sólo un elemento a la vez.
   str_pieces = (TPieces*) calloc (3, sizeof(TPieces)); // Crearemos tres elementos a la vez
@@ -537,6 +536,7 @@ void LevelControl()
     }
     InitializeShip();
     PlayerInit();
+    InicializarEnemyLevel();
     // 4- Inicializamos bonus, enemigos, piezas/nave y jugador (en ese orden)
 
   }
