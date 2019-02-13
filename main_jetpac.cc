@@ -314,8 +314,9 @@ int esat::main(int argc, char **argv) {
       DropCargo();
       PlayerInShip();
       LevelControl();
-      ControlEnemyLevel();
-
+	if(!loadingLevel){
+        	ControlEnemyLevel();
+	}
 		  break;
 
 		case kGamePhase_EndGame:
