@@ -17,15 +17,15 @@ unsigned char seg_counter = 0;
 
 const int kWindowX = 768, kWindowY = 576;
 
-SoLoud::Soloud canal;
 //Declaración variables canal audio.
+SoLoud::Soloud canal;
 SoLoud::Wav audio_disparo, audio_nave, audio_intro;
 
-
-
 esat::SpriteHandle *ship_1, *ship_2, *ship_3, *ship_4, *combustion, *ship_pieces_1, *ship_pieces_2, *ship_pieces_3, *ship_pieces_4; // Sprites para nave y combustion
-int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
 esat::SpriteHandle *Block_sprite_Enemy;//Sprites de los enemigos.
+int g_level=1; // De momento pongo esto para saber el nivel en el que estamos, para pasarle los parámetros.
+bool newLevel = false; // Usaremos esto para INICIALIZAR enemigos, bonus y fuel
+bool loadingLevel = false; // Usaremos esto a TRUE para hacer desaparecer enemigos, etc
 
 enum GamePhase { kGamePhase_Menu = 0,
                  kGamePhase_InGame,
@@ -96,7 +96,6 @@ struct TEnemy {
   float posx, posy;
   esat:: SpriteHandle *enemy_sprites;
   TPropulsion *my_explo;
-  //EnemyTypes enemy_type;
   bool is_alive;
   float speedx, speedy;
   int points;
@@ -118,7 +117,7 @@ struct TBonus {
 };
 TBonus str_bonus;
 
-#include "bonus.cc"
+
 
 struct TNave {
   float posx, posy;
@@ -149,7 +148,6 @@ struct Tfuel {
 }fuel;
 
 #include "fuel.cc"
-#include "rocket.cc"
 
 double g_HiScore = 0;
 bool g_keyboardSelected = true; // bool de control para el menú
@@ -168,9 +166,11 @@ void TimeInFps(){
 	if(fps_counter == fps) {seg_counter++;}
 }
 
+#include "Explo_Enemys.cc"
 #include "pablo.cc"
 #include "Player.cc"
-#include "Explo_Enemys.cc"
+
+#include "bonus.cc"
 
 #include "base_enemy.cc"
 #include "peluza.cc"
@@ -179,6 +179,7 @@ void TimeInFps(){
 #include "ovni.cc"
 
 #include "controlEnemy.cc" //Debe estar al final de los include de los enemy
+#include "rocket.cc"
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
@@ -186,10 +187,12 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Up) != NULL ? g_jetpac = true : g_jetpac = false;
   esat::IsKeyPressed(esat::kSpecialKey_Space) != NULL ? g_shoot = true : g_shoot = false;
 }
+
 #include "sound.cc"
+
 void PreMemorySaved(){
   LoadShipPointers();
-MemoriaAudio();
+  MemoriaAudio();
   MemoryForInterface();
 	BonusSpriteMemory();
   PlatformsMemoryReserved();
@@ -243,6 +246,7 @@ void Collisions () {
 }
 
 int esat::main(int argc, char **argv) {
+
   canal.init();
 	esat::WindowInit(kWindowX,kWindowY);
   WindowSetMouseVisibility(true);
@@ -255,7 +259,6 @@ int esat::main(int argc, char **argv) {
   // Esto hay que llamarlo también dentro de InGame en cada nivel que se haga. Por lo tanto esto de aquí abajo se modificará.
   InitializePieces();
   InitializeShip();
-
   InicializarEnemyLevel();
 
     while(esat::WindowIsOpened() && !esat::IsSpecialKeyDown(esat::kSpecialKey_Escape)) {
@@ -267,14 +270,14 @@ int esat::main(int argc, char **argv) {
 
 	      switch (phase){
 		case kGamePhase_Menu:
-			        (audio_intro).stop();
+      (audio_intro).stop();
       PrintScore();
       PrintMenu();
 		  break;
 
 		case kGamePhase_Intro:
-			      PlaySound();
-		  PrintIntro();
+      PlaySound();
+      PrintIntro();
 		  break;
 
 		case kGamePhase_InGame:
@@ -295,6 +298,7 @@ int esat::main(int argc, char **argv) {
       PlayerInShip();
       LevelControl();
       ControlEnemyLevel();
+
 		  break;
 
 		case kGamePhase_EndGame:
