@@ -4,6 +4,16 @@ const int laser_quantity = 10;
 int contadorMuerte = 0;
 bool reset = false;
 
+bool CollisionBalaTerreno(TShoot shoot){
+  for(int i=0;i<=3;i++){
+    if (shoot.posx > (*(str_mapa + i)).posx && shoot.posx < ((*(str_mapa + i)).posx + esat::SpriteWidth( (*( str_mapa + i )).platform_sprites ))
+    && shoot.posy > (*(str_mapa + i)).posy && shoot.posy < ((*(str_mapa + i)).posy + esat::SpriteHeight((*(str_mapa + i)).platform_sprites))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void PlasmaLasers(TPlayer *player){
 
   bool  found=false;
@@ -38,7 +48,7 @@ void PlasmaLasers(TPlayer *player){
 void DrawLasers(int i){
 
   if((str_shoot+i)->shot){
-     
+
      if(!(str_shoot+i)->direction){
       (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),0,0
     ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
@@ -65,7 +75,7 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision){
 
-          (str_shoot+i)->posx-=(str_shoot+i)->speed; 
+          (str_shoot+i)->posx-=(str_shoot+i)->speed;
         }
 
         if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length>0){
@@ -78,14 +88,14 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && ((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision)){
 
-          (str_shoot+i)->length+=(str_shoot+i)->speed; 
+          (str_shoot+i)->length+=(str_shoot+i)->speed;
         }
 
         if((str_shoot+i)->length>esat::SpriteWidth(*s_shots)){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-        
+
         if((str_shoot+i)->posx<-144){
 
           (str_shoot+i)->posx=kWindowX+144;
@@ -95,7 +105,7 @@ void LaserMovement(TPlayer *player){
 
         if((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision){
 
-          (str_shoot+i)->posx+=(str_shoot+i)->speed; 
+          (str_shoot+i)->posx+=(str_shoot+i)->speed;
         }
 
         if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length>0){
@@ -117,7 +127,7 @@ void LaserMovement(TPlayer *player){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-        
+
         if((str_shoot+i)->posx>kWindowX+144){
 
         (str_shoot+i)->posx=-144;
@@ -328,8 +338,7 @@ void PropulsionFreeMemory(){
 }
 
 void PlayerDraw(){
-  if(str_player.show_player)
-  {
+  if(str_player.show_player){
     esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
   }
 }
@@ -345,7 +354,7 @@ void PlayerInit(){
   }
 }
 
-void PlayerDieAndReset(){
+void PlayerDie(){
 
   if(CollisionPlayerEnemy(str_player)&&str_player.vida>0&&reset==false){
     str_player.vida--;
@@ -355,6 +364,9 @@ void PlayerDieAndReset(){
   }else if (CollisionPlayerEnemy(str_player)&&str_player.vida<=0){
     phase = kGamePhase_EndGame;
   }
+}
+
+void PlayerReset(){
   if (reset==true){
     contadorMuerte++;
     if (contadorMuerte >= 120){
@@ -370,7 +382,8 @@ void PlayerFunctions(){
 
   if(str_player.show_player){
     PlayerCreatePropulsion();
-    PlayerDieAndReset();
+    PlayerDie();
+    CollisionBalaTerreno((*(str_shoot+1)));
     PlayerFlying(&str_player);
     if(str_player.is_flying){
       PlayerFlyingMovement(&str_player);
@@ -383,6 +396,7 @@ void PlayerFunctions(){
     PlasmaLasers(&str_player);
     LaserMovement(&str_player);
   }
+  PlayerReset();
 }
 
 void CollisionPlayer() {
