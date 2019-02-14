@@ -166,6 +166,7 @@ bool CollisionEnemy(TEnemy enemy) {
 
 
 
+
 bool CollisionBullet(TShoot bullet) {
 	//str_mapa
 	TEnemy tmp;
@@ -185,6 +186,7 @@ bool CollisionBullet(TShoot bullet) {
 			EnemysCreateExplo((str_enemy+i));
 			(*(str_enemy+i)).is_alive = false;
 			(*(str_enemy+i)).seg_counter = fps_counter;
+			str_player.score += (*(str_enemy+i)).points;
 			
 			return true;
 		}
@@ -197,6 +199,7 @@ bool CollisionBullet(TShoot bullet) {
   return false;
   
 }
+
 
 
 
