@@ -166,7 +166,7 @@ bool CollisionEnemy(TEnemy enemy) {
 
 
 
-bool Collisionbullet(TShoot bullet) {
+bool CollisionBullet(TShoot bullet) {
 	//str_mapa
 	TEnemy tmp;
 	
@@ -174,74 +174,22 @@ bool Collisionbullet(TShoot bullet) {
 		
 		tmp = (*(str_enemy+i));
 		
-		if( bullet.posx + kWindowX*0.75 > tmp.posx 
-		&&  bullet.posx + kWindowX*0.75 < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		if( bullet.posx > tmp.posx 
+		&&  bullet.posx < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
 		&&  bullet.posy 					  > tmp.posy
 		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){
-			return true;
-		}
-		/*
-		if((bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites)))) > tmp.posx 
-		&& (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites)))) < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&&  bullet.posy 											      > tmp.posy
-		&&  bullet.posy											      < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){
-			return true;
-		}
-		
-		if((bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))  > tmp.posx 
-		&& (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))  < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) > tmp.posy
-		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){
-			return true;
-		}
-		
-		if( bullet.posx   											   > tmp.posx 
-		&&  bullet.posx  											   < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) > tmp.posy
-		&& (bullet.posy + esat::SpriteHeight((*(bullet.bullet_sprites)))) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){
-			return true;
-		}
-		/*
-		if( (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))     > tmp.posx 
-		&&  (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + (esat::SpriteHeight((*(bullet.bullet_sprites)))/3)) > tmp.posy
-		&& (bullet.posy + (esat::SpriteHeight((*(bullet.bullet_sprites)))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
 		){	
-			//printf("Colicion_1");
+			
+			EnemysCreateExplo((*(str_enemy+i)));
+			(*(str_enemy+i)).is_alive = false;
+			(*(str_enemy+i)).seg_counter = fps_counter;
+			
 			return true;
 		}
 		
-		if(  (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))        > tmp.posx 
-		&&   (bullet.posx + esat::SpriteWidth((*(bullet.bullet_sprites))))        < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) > tmp.posy
-		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){	
-			//printf("Colicion_2");
-			return true;
-		}
 		
-		if(  bullet.posx   											         > tmp.posx 
-		&&   bullet.posx  											         < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + ((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)) > tmp.posy
-		&& (bullet.posy + ((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){	
-			//printf("Colicion_3");
-			return true;
-		}
 		
-		if(   bullet.posx   					  					        	     > tmp.posx 
-		&&    bullet.posx  							         				     < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
-		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) > tmp.posy
-		&& (bullet.posy + (((esat::SpriteHeight((*(bullet.bullet_sprites))))/3)*2)) < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
-		){	
-			//printf("Colicion_4");
-			return true;
-		}
-		*/
+		
   }
   
   return false;
