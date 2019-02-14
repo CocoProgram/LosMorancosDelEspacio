@@ -22,6 +22,7 @@ INCLUDES:
 - cruces.cc
 - sapo.cc
 - alcon.cc
+- sound.cc
 
 
 RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VARIABLES GLOBALES EN EL ARCHIVO PRINCIPAL.    
@@ -30,7 +31,6 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 # TO DO
 - Colisión Enemigo-Player
 - Colision Bala-Enemigo
-- Sonido
 - Gestión de niveles (falta si hay más de un jugador, y cuando el jugador muere en partida.)
 
 # LosMorancosDelEspacio
