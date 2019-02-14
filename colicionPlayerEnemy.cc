@@ -11,7 +11,7 @@ bool CollisionPlayerEnemy(TPlayer Player) {
 			if( Player.posx  > tmp.posx 
 			&&  Player.posx  < (tmp.posx + (esat::SpriteWidth((*(enemy.enemy_sprites)))))
 			&&  Player.posy  > tmp.posy
-			&&  Player.posy  < (tmp.posy + (esat::SpriteHeight((*(enemy.enemy_sprites))))))		
+			&&  Player.posy  < (tmp.posy + (esat::SpriteHeight((*(enemy.enemy_sprites)))))		
 			){	
 				printf("Player X= % 3f -- Player Y= % 3f -- Enemy X= % 3f -- Enemy Y= % 3f\n", Player.posx, Player.posy, tmp.posx, tmp.posy);
 				return true;
