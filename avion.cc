@@ -27,7 +27,7 @@ void InicializarAvion(TEnemy *Avion, esat::SpriteHandle *sprite){
 	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(Avion, sprite, i);
-		(*(Avion+i)).points = 30;
+		(*(Avion+i)).points = 55;
 		(*(Avion+i)).speedx = 0;
 		(*(Avion+i)).speedy = (-2);
 	}

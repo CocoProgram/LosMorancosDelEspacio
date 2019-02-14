@@ -20,7 +20,7 @@ void InicializarOvni(TEnemy *Ovni, esat::SpriteHandle *sprite){
 	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(Ovni, sprite, i);
-		(*(Ovni+i)).points = 30;
+		(*(Ovni+i)).points = 50;
 		(*(Ovni+i)).phase_animation = false;
 	}
 	

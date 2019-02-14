@@ -20,7 +20,7 @@ void InicializarBola(TEnemy *bola, esat::SpriteHandle *sprite){
 	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(bola, sprite, i);
-		(*(bola+i)).points = 30;
+		(*(bola+i)).points = 40;
 		(*(bola+i)).speedx = 2;
 	}	
 }

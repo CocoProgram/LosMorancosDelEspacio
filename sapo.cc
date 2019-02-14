@@ -20,7 +20,7 @@ void InicializarSapo(TEnemy *sapo, esat::SpriteHandle *sprite){
 	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(sapo, sprite, i);
-		(*(sapo+i)).points = 30;
+		(*(sapo+i)).points = 50;
 		(*(sapo+i)).phase_animation = false;
 	}
 	

@@ -23,7 +23,7 @@ void InicializarPelusa(TEnemy *pelusa, esat::SpriteHandle *sprite){
 	for(int i=0;i<g_num_enemy;i++){
 		
 		AsignacionEnemy(pelusa, sprite, i);
-		(*(pelusa+i)).points = 80;
+		(*(pelusa+i)).points = 40;
 		(*(pelusa+i)).speedx = 2;
 	}
 	

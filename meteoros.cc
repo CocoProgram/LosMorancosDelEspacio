@@ -113,7 +113,7 @@ void MovimientoMeteoro(TEnemy *meteoro) {
 
 void DibujarMeteoro(){
 	
-	for(int i=0;i<4;i++){
+	for(int i=0;i<g_num_enemy;i++){
 		
 		if((*(str_enemy+i)).is_alive){
 			MovimientoMeteoro((str_enemy+i));		
