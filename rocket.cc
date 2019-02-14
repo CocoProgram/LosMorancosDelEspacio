@@ -1,3 +1,4 @@
+
 void LoadShipPointers() { // Poner en el main de load pointers ( o no)
   str_nave = (TNave*) calloc (1, sizeof(TNave)); // Crearemos sólo un elemento a la vez.
   str_pieces = (TPieces*) calloc (3, sizeof(TPieces)); // Crearemos tres elementos a la vez
@@ -513,13 +514,32 @@ void InitializeShip(){
 
 void LevelControl()
 {
+  if(g_level == 1)
+  {
+    g_num_enemy = 4;
+    MasReservaEnemy();
+  }
+
+  if((*str_nave).fuel_level == 3 && g_num_enemy < 5 && g_level == 3)
+  {
+    g_num_enemy++;
+    MasReservaEnemy();
+    AsignacionEnemy(str_enemy,Block_sprite_Enemy,g_num_enemy-1);
+    (*(str_enemy+g_num_enemy-1)).points = 30;
+  }
+  if((*str_nave).ship_parts == 3 && g_num_enemy < 6 && g_level == 5)
+  {
+    g_num_enemy++;
+    MasReservaEnemy();
+    AsignacionEnemy(str_enemy,Block_sprite_Enemy,g_num_enemy-1);
+    (*(str_enemy+g_num_enemy-1)).points = 40;
+  }
+
   // Cuando la nave alcance la parte superior más un poco...
   if((*str_nave).posy < 50)
   {
     (*str_nave).fuel_level = 0;
     loadingLevel = true;
-
-    // Que desaparezcan todos los enemigos
   }
 
   if(newLevel)
