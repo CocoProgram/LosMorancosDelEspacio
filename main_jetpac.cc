@@ -196,7 +196,7 @@ void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA AC
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Right) != NULL ? g_right = true : g_right = false;
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Up) != NULL ? g_jetpac = true : g_jetpac = false;
-  esat::IsKeyPressed(esat::kSpecialKey_Space) != NULL ? g_shoot = true : g_shoot = false;
+  esat::IsKeySpecialDown(esat::kSpecialKey_Space) != NULL ? g_shoot = true : g_shoot = false;
 }
 
 #include "sound.cc"
