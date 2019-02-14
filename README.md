@@ -29,6 +29,7 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
 - Colisión Enemigo-Player
+- Colisión Player-Plataforma
 - Puntuación al matar enemigos
 - Gestión de niveles (falta si hay más de un jugador, y cuando el jugador muere en partida.)
 
