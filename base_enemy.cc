@@ -175,12 +175,14 @@ bool CollisionBullet(TShoot bullet) {
 		tmp = (*(str_enemy+i));
 		
 		if( bullet.posx > tmp.posx 
-		&&  bullet.posx < (tmp.posx + (esat::SpriteWidth(tmp.enemy_sprites)))
+		&&  bullet.posx < (tmp.posx + (esat::SpriteWidth((*(tmp.enemy_sprites)))))
 		&&  bullet.posy 					  > tmp.posy
-		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight(tmp.enemy_sprites)))		
+		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight((*(tmp.enemy_sprites)))))
+		&&  bullet.shot
+		&&  !bullet.collision
 		){	
 			
-			EnemysCreateExplo((*(str_enemy+i)));
+			EnemysCreateExplo((str_enemy+i));
 			(*(str_enemy+i)).is_alive = false;
 			(*(str_enemy+i)).seg_counter = fps_counter;
 			
