@@ -1,5 +1,5 @@
 # Al subir vuestro CÓDIGO, introducid el include en el main
-# Archivos a incluir (13/02/19 1:45am)
+# Archivos a incluir (14/02/19 19:09pm)
 PRINCIPAL: 
 - main_jetpac.cc
 
@@ -18,7 +18,6 @@ INCLUDES:
 - meteoros.cc
 - ovni.cc
 - peluza.cc
-- sound.cc
 - cruces.cc
 - sapo.cc
 - alcon.cc
