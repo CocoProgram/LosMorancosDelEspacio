@@ -175,7 +175,6 @@ void TimeInFps(){
 
 #include "Explo_Enemys.cc"
 #include "pablo.cc"
-#include "Player.cc"
 
 #include "bonus.cc"
 
@@ -190,6 +189,7 @@ void TimeInFps(){
 #include "alcon.cc"
 #include "sapo.cc"
 #include "controlEnemy.cc" //Debe estar al final de los include de los enemy
+#include "Player.cc"
 #include "rocket.cc"
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
@@ -314,7 +314,7 @@ int esat::main(int argc, char **argv) {
       DropCargo();
       PlayerInShip();
       LevelControl();
-	if(!loadingLevel){
+	if(!loadingLevel && !reset){
         	ControlEnemyLevel();
 	}
 		  break;
