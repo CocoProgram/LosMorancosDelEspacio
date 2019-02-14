@@ -345,10 +345,32 @@ void PlayerInit(){
   }
 }
 
+void PlayerDieAndReset(){
+
+  if(CollisionPlayerEnemy(str_player)&&str_player.vida>0&&reset==false){
+    str_player.vida--;
+    str_player.show_player=false;
+    reset=true;
+    fuel.map_colision = false;
+  }else if (CollisionPlayerEnemy(str_player)&&str_player.vida<=0){
+    phase = kGamePhase_EndGame;
+  }
+  if (reset==true){
+    contadorMuerte++;
+    if (contadorMuerte >= 120){
+      PlayerInit();
+      InicializarEnemyLevel();
+      reset = false;
+      contadorMuerte = 0;
+    }
+  }
+}
+
 void PlayerFunctions(){
 
   if(str_player.show_player){
     PlayerCreatePropulsion();
+    PlayerDieAndReset();
     PlayerFlying(&str_player);
     if(str_player.is_flying){
       PlayerFlyingMovement(&str_player);
