@@ -1,4 +1,6 @@
-const int laser_quantity = 30;
+#include "colicionplayerenemy.cc"
+
+const int laser_quantity = 10;
 
 void PlasmaLasers(TPlayer *player){
 
@@ -14,6 +16,7 @@ void PlasmaLasers(TPlayer *player){
         (str_shoot+i)->distance=0;
         (str_shoot+i)->direction=player->direction;
         (str_shoot+i)->length=0;
+        (str_shoot+i)->collision=false;
         if(!(str_shoot+i)->direction){
 
           (str_shoot+i)->posx=player->posx;
@@ -30,6 +33,22 @@ void PlasmaLasers(TPlayer *player){
   }
 }
 
+void DrawLasers(int i){
+
+  if((str_shoot+i)->shot){
+     
+     if(!(str_shoot+i)->direction){
+      (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),0,0
+    ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
+      esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx,(str_shoot+i)->posy);
+    }else{
+       (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),str_shoot->right_bullet,0
+    ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
+       esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx-(str_shoot+i)->length,(str_shoot+i)->posy);
+    }
+  }
+}
+
 void LaserMovement(TPlayer *player){
 
   for(int i=0;i<laser_quantity;++i){
@@ -42,29 +61,29 @@ void LaserMovement(TPlayer *player){
 
       if(!(str_shoot+i)->direction){
 
-        if((str_shoot+i)->distance<kWindowX*0.75){
+        if((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision){
 
-          (str_shoot+i)->posx-=(str_shoot+i)->speed;
+          (str_shoot+i)->posx-=(str_shoot+i)->speed; 
         }
 
-          if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length>0){
-            (str_shoot+i)->length-=(str_shoot+i)->speed;
-          }
+        if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length>0){
+          (str_shoot+i)->length-=(str_shoot+i)->speed;
+        }
 
-          if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length<=0){
-            (str_shoot+i)->shot=false;
-          }
+        if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length<=0){
+          (str_shoot+i)->shot=false;
+        }
 
-        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75){
+        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && ((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision)){
 
-          (str_shoot+i)->length+=(str_shoot+i)->speed;
+          (str_shoot+i)->length+=(str_shoot+i)->speed; 
         }
 
         if((str_shoot+i)->length>esat::SpriteWidth(*s_shots)){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-
+        
         if((str_shoot+i)->posx<-144){
 
           (str_shoot+i)->posx=kWindowX+144;
@@ -72,23 +91,21 @@ void LaserMovement(TPlayer *player){
 
       }else{
 
-        if((str_shoot+i)->distance<kWindowX*0.75){
+        if((str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision){
 
-          (str_shoot+i)->posx+=(str_shoot+i)->speed;
+          (str_shoot+i)->posx+=(str_shoot+i)->speed; 
         }
 
-
-
-        if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length>0){
+        if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length>0){
           (str_shoot+i)->length-=(str_shoot+i)->speed;
           (str_shoot+i)->right_bullet+=(str_shoot+i)->speed;
         }
 
-        if((str_shoot+i)->distance>=kWindowX*0.75 && (str_shoot+i)->length<=0){
+        if(((str_shoot+i)->distance>=kWindowX*0.75 || (str_shoot+i)->collision) && (str_shoot+i)->length<=0){
           (str_shoot+i)->shot=false;
         }
 
-        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75){
+        if((str_shoot+i)->length<esat::SpriteWidth(*s_shots) && (str_shoot+i)->distance<kWindowX*0.75 && !(str_shoot+i)->collision){
 
           (str_shoot+i)->length+=(str_shoot+i)->speed;
           (str_shoot+i)->right_bullet-=(str_shoot+i)->speed;
@@ -98,37 +115,18 @@ void LaserMovement(TPlayer *player){
 
           (str_shoot+i)->length=esat::SpriteWidth(*s_shots);
         }
-
+        
         if((str_shoot+i)->posx>kWindowX+144){
 
         (str_shoot+i)->posx=-144;
         }
       }
     }
-  }
-}
 
-void DrawLasers(){
-
-  for(int i=0;i<laser_quantity;++i){
-
-    if((str_shoot+i)->shot){
-
-
-
-      if(!(str_shoot+i)->direction){
-        (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),0,0
-      ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
-
-        esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx,(str_shoot+i)->posy);
-      }else{
-
-        (str_shoot+i)->s_sub_shot = esat::SubSprite(*(s_shots+(str_shoot+i)->direction),str_shoot->right_bullet,0
-      ,(str_shoot+i)->length,esat::SpriteHeight(*s_shots));
-
-        esat::DrawSprite((str_shoot+i)->s_sub_shot,(str_shoot+i)->posx-(str_shoot+i)->length,(str_shoot+i)->posy);
-      }
+    if(CollisionBullet(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      str_shoot->collision=true;
     }
+    DrawLasers(i);
   }
 }
 
@@ -330,7 +328,6 @@ void PropulsionFreeMemory(){
 void PlayerDraw(){
   if(str_player.show_player)
   {
-    DrawLasers();
     esat::DrawSprite(*((str_player.player_sprites)+str_player.phase_animation), str_player.posx, str_player.posy);
   }
 }
@@ -348,18 +345,20 @@ void PlayerInit(){
 
 void PlayerFunctions(){
 
-  PlayerCreatePropulsion();
-  PlayerFlying(&str_player);
-  if(str_player.is_flying){
-    PlayerFlyingMovement(&str_player);
-  }else{
-    PlayerGroundMovement(&str_player);
+  if(str_player.show_player){
+    PlayerCreatePropulsion();
+    PlayerFlying(&str_player);
+    if(str_player.is_flying){
+      PlayerFlyingMovement(&str_player);
+    }else{
+      PlayerGroundMovement(&str_player);
+    }
+    PlayerMovementLimits(&str_player);
+    PlayerAnimations(&str_player);
+    PropulsionAnimations(&str_propulsion);
+    PlasmaLasers(&str_player);
+    LaserMovement(&str_player);
   }
-  PlayerMovementLimits(&str_player);
-  PlayerAnimations(&str_player);
-  PropulsionAnimations(&str_propulsion);
-  PlasmaLasers(&str_player);
-  LaserMovement(&str_player);
 }
 
 void CollisionPlayer() {
