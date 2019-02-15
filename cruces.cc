@@ -178,12 +178,18 @@ void controlCruces(){
 	
 	for(int i=0;i<g_num_enemy;i++){
 		
-		/*MovimientoBola((str_enemy+i));*/
-		/*esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites + (*(str_enemy)).phase_animation)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));*/
-		MovimientoCruz((str_enemy+i));
+		if((*(str_enemy+i)).is_alive){
+			MovimientoCruz((str_enemy+i));
+			esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
+		}else{
 		
-		esat::DrawSprite((*((*(str_enemy+i)).enemy_sprites)), ((*(str_enemy+i)).posx), ((*(str_enemy+i)).posy));
+			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
+			
+				 InicializarCruz(str_enemy, Block_sprite_Enemy);
+			
+			}
 		
+		}
 	}
 	
 	
