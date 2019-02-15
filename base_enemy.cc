@@ -181,6 +181,7 @@ bool CollisionBullet(TShoot bullet) {
 		&&  bullet.posy 					  < (tmp.posy + (esat::SpriteHeight((*(tmp.enemy_sprites)))))
 		&&  bullet.shot
 		&&  !bullet.collision
+		&&  tmp.is_alive
 		){	
 			
 			EnemysCreateExplo((str_enemy+i));
