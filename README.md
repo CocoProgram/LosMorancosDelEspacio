@@ -1,5 +1,5 @@
 # Al subir vuestro CÓDIGO, introducid el include en el main
-# Archivos a incluir (14/02/19 19:09pm)
+# Archivos a incluir (15/02/19 16:30pm)
 PRINCIPAL: 
 - main_jetpac.cc
 
@@ -28,7 +28,7 @@ RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VAR
 TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
-- Que cuando muera el jugador con una pieza, la pieza caiga.
+- Que cuando muera el jugador con una pieza, la pieza caiga en el escenario
 - Colisión Disparo-Plataforma
 - Gestión de niveles (falta si hay más de un jugador y endgame)
 
