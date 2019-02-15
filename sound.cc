@@ -6,8 +6,9 @@ void MemoriaAudio(){
 
 }
 
+
 void MenuBackgroundSound(){
-  canal.play(audio_intro,1.0f); //ponedlo luego a 20, que esto solo era trolling.
+  canal.play(audio_intro,1.0f); 
 }
 
 
@@ -17,7 +18,7 @@ void PlaySound(){
       canal.play(audio_disparo ,1.0f);
     }
 
-  if (str_player.show_player == false) {
+  if (str_player.show_player == false && reset == false) {
     canal.play(audio_nave, 1.0f);
   } else {
   (audio_nave).stop();
