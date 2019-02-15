@@ -29,9 +29,8 @@ TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
 - Que cuando muera el jugador con una pieza, la pieza caiga.
-- Colisión Enemigo-Player
 - Colisión Disparo-Plataforma
-- Gestión de niveles (falta si hay más de un jugador, y cuando el jugador muere en partida.)
+- Gestión de niveles (falta si hay más de un jugador y endgame)
 
 # LosMorancosDelEspacio
 
