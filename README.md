@@ -28,7 +28,8 @@ RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VAR
 TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
-- Gestión de niveles (endgame y (2 jugadores? xd))
+- Gestión de niveles (endgame)
+- Posibles errores
 
 # LosMorancosDelEspacio
 
