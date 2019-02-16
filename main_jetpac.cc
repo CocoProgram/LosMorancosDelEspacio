@@ -340,7 +340,6 @@ int esat::main(int argc, char **argv) {
 
 		case kGamePhase_EndGame:
       SaveHiScore();
-      InitializeParametres();
       str_player.vida = 5;
       str_player.score = 0;
       InitializePieces();
