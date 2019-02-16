@@ -324,7 +324,7 @@ void PlayerInShip()
 {
   if((*str_nave).fuel_level == 6)
   {
-    if(str_player.posx > 490 && str_player.posx < 510 && str_player.posy > 392 && str_player.posy < 500)
+    if(str_player.posx > 490 && str_player.posx < 510 && str_player.posy > 392 && str_player.posy < 500 && str_player.show_player)
     {
       str_player.show_player = false;
       str_player.vida +=1;
