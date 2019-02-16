@@ -449,38 +449,6 @@ void PieceFall()
         (*(str_pieces + i)).falling = false;
       }
     }
-/*
-    // MAPA BASE
-    if  ( ((*(str_pieces + i)).posy + 36 ) >= (*str_mapa).posy ) {
-        (*(str_pieces + i)).falling = false;
-    }
-
-    // PLAT IZQUIERDA
-    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 1)).posy
-    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 1)).posx)
-    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 1)).posx + esat::SpriteWidth( (*(str_mapa + 1)).platform_sprites) ) ) )
-    {
-      printf("IZQ \n");
-      (*(str_pieces + i)).falling = false;
-    }
-
-    // PLAT CENTRO
-    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 2)).posy
-    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 2)).posx)
-    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 2)).posx + esat::SpriteWidth( (*(str_mapa + 2)).platform_sprites) ) ) )
-    {
-      printf("CEN \n");
-      (*(str_pieces + i)).falling = false;
-    }
-
-  // PLAT DERECHA
-    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 3)).posy
-    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 3)).posx)
-    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) ) )
-    {
-      printf("DER \n");
-      (*(str_pieces + i)).falling = false;
-    } */
   }
 
 }
