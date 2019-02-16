@@ -342,6 +342,8 @@ int esat::main(int argc, char **argv) {
       SaveHiScore();
       str_player.vida = 5;
       str_player.score = 0;
+      fuel.f_counter = 6;
+      fuel.is_active = false;
       InitializePieces();
       InitializeShip();
       InicializarEnemyLevel();
@@ -367,4 +369,3 @@ int esat::main(int argc, char **argv) {
 
   return 0;
 }
-
