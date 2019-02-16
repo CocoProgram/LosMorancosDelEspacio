@@ -135,7 +135,7 @@ TNave *str_nave;
 struct TPieces{
   float posx, posy;
   bool is_visible=false, is_attached=false;
-  bool just_dropped=false;
+  bool just_dropped=false; bool falling=false;
 };
 TPieces *str_pieces;
 
@@ -338,3 +338,4 @@ int esat::main(int argc, char **argv) {
 
   return 0;
 }
+
