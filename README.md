@@ -28,9 +28,7 @@ RECORDAR QUE HAY QUE PONER EL INCLUDE PERSONAL DEBAJO DE TODOS LOS STRUCTS Y VAR
 TAMBIÉN INCLUIR LA CARPETA DE RESOURCES DEL DRIVE.
 
 # TO DO
-- Que cuando muera el jugador con una pieza, la pieza caiga en el escenario
-- Colisión Disparo-Plataforma
-- Gestión de niveles (falta si hay más de un jugador y endgame)
+- Gestión de niveles (endgame y (2 jugadores? xd))
 
 # LosMorancosDelEspacio
 
@@ -38,11 +36,10 @@ Alex & Pablo:
 - Interfaz, Cohete, Fuel, Gestión de niveles
 
 JC & Alejandro:
-- Jugador, Disparo, Animaciones
+- Jugador, Disparo, Animaciones, Colisiones
 
 Luciano & Nacho:
-- Enemigos
+- Enemigos, Colisiones
 
 Carlos:
 - Sprites, Bonus, Sonido
-
