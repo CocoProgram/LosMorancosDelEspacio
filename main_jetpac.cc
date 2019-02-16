@@ -31,7 +31,7 @@ bool loadingLevel = false; // Usaremos esto a TRUE para hacer desaparecer enemig
 enum GamePhase { kGamePhase_Menu = 0,
                  kGamePhase_InGame,
                  kGamePhase_EndGame,
-	       	       kGamePhase_Intro};
+	       	       kGamePhase_Intro };
 
 GamePhase phase = kGamePhase_Intro;
 
@@ -135,7 +135,8 @@ TNave *str_nave;
 struct TPieces{
   float posx, posy;
   bool is_visible=false, is_attached=false;
-  bool just_dropped=false; bool falling=false;
+  bool just_dropped=false;
+  bool falling = false;
 };
 TPieces *str_pieces;
 
@@ -149,22 +150,21 @@ struct Tfuel {
   bool is_active = false;
   bool map_colision = false;
   bool ship_colision = false;
-  bool player_colision = false;
+  bool enemy_colision = false;
   bool is_attached = false;
   bool just_dropped = false;
 }fuel;
 
-#include "fuel.cc"
 
 double g_HiScore = 0;
 bool g_keyboardSelected = true; // bool de control para el menú
 esat::SpriteHandle s_vida, *s_intro; // sprites para la intro y vida del jugador;
 
-//Variables para hacer ITOA de Puntuaciones y Vidas:
-char *g_write_player1score, *g_write_player2score, *g_write_hi, *g_write_player1lives;
+//Variables para hacer ITOA de Puntuaciones, Ranking y Vidas:
+char *g_write_player1score = NULL, *g_write_player2score = NULL, *g_write_hi = NULL, *g_write_player1lives = NULL;
 
 //Punteros de floats para hacer: Draw Solid Path de las "cajas" blancas del menú:
-float *g_white_box1, *g_white_box2, *g_white_box3;
+float *g_white_box1 = NULL, *g_white_box2 = NULL, *g_white_box3 = NULL;
 
 void TimeInFps(){
   /* Contamos los fps que trascurren y cuando llegan al máximo,
@@ -190,7 +190,12 @@ void TimeInFps(){
 #include "sapo.cc"
 #include "controlEnemy.cc" //Debe estar al final de los include de los enemy
 #include "Player.cc"
+
 #include "rocket.cc"
+#include "gameover.cc"
+#include "save.cc"
+
+
 
 void BoleanasTeclas(){ //EN ESTE VOID LLAMAMOS A LAS BOOLEANAS QUE INDICAN LA ACTIVACIÓN DE LAS TECLAS
   esat::IsSpecialKeyPressed(esat::kSpecialKey_Left) != NULL ? g_left = true : g_left = false;
@@ -211,6 +216,7 @@ void PreMemorySaved(){
   PropulsionMemorySaved();
   ReservaMemoriaEnemy();
   ExploEnemyMemorySaved();
+
 }
 
 void FreeMemorySaved(){
@@ -223,6 +229,7 @@ void FreeMemorySaved(){
   PropulsionFreeMemory();
   LiberarEnemy();
 	ExploEnemyMemoryFree();
+
 }
 
 void InitializeParametres(){
@@ -230,6 +237,7 @@ void InitializeParametres(){
   	PlatformPositions();
     PlayerInit();
     PropulsionLoadSprites();
+    CargarHiScore();
 }
 
 void LoadSprites(){
@@ -259,6 +267,17 @@ void DrawingSprites(){
 void Collisions () {
   if(str_bonus.is_alive == true) { BonusCollision(); }
   if(str_player.is_alive == true) { CollisionPlayer(); }
+}
+
+
+void AtajosDeTeclado(){
+  if ( esat::IsKeyDown('1') ){
+    str_player.vida--;
+  }
+  if ( esat::IsKeyDown('2') ){
+    str_player.score += 500;
+  }
+  if (str_player.vida == 0){ phase = kGamePhase_EndGame; }
 }
 
 int esat::main(int argc, char **argv) {
@@ -303,7 +322,7 @@ int esat::main(int argc, char **argv) {
       DrawingSprites();
       PlayerFunctions();
       Collisions();
-
+      AtajosDeTeclado();
       Fuel();
 
       DrawShipPieces(g_level);
@@ -320,7 +339,17 @@ int esat::main(int argc, char **argv) {
 		  break;
 
 		case kGamePhase_EndGame:
+      SaveHiScore();
+      InitializeParametres();
+      str_player.vida = 5;
+      str_player.score = 0;
+      InitializePieces();
+      InitializeShip();
+      InicializarEnemyLevel();
+      GameOver();
 		  break;
+
+
 }
 
     	esat::DrawEnd();
@@ -331,6 +360,7 @@ int esat::main(int argc, char **argv) {
     	}while((current_time-last_time)<=1000.0/fps);
     	esat::WindowFrame();
   }
+
   SpritesRelease();
   FreeMemorySaved();
   canal.deinit();
