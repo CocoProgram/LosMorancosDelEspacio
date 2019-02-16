@@ -14,7 +14,6 @@ void LoadShipPointers() { // Poner en el main de load pointers ( o no)
   ship_4 = (esat::SpriteHandle*) calloc (8,sizeof(esat::SpriteHandle));
   combustion = (esat::SpriteHandle*) calloc (2,sizeof(esat::SpriteHandle));
 }
-
 // Poner en el main de liberar memoria
 void FreeMemoryShip(){
   free(str_nave); // El free nave lo haremos cada vez que se complete una fase, el jugador muera, etc
@@ -32,7 +31,6 @@ void FreeMemoryShip(){
   free(combustion);
 }
 
-// Cargar los sprites que utilizaremos
 void LoadShipSprites() {
 
   *(ship_pieces_1) = esat::SpriteFromFile("./resources/Sprites/ship/1_Piece_0.png");
@@ -91,7 +89,6 @@ void LoadShipSprites() {
   *(combustion + 1) = esat::SpriteFromFile("./resources/Sprites/ship/Fire_1.png");
 }
 
-// Esto sólo lo usaremos al EMPEZAR cada 6 niveles
 void DrawShipPieces(int lvl) {
   if(lvl == 1)
   {
@@ -215,9 +212,6 @@ void DrawShip(TNave ship, int lvl){
 
   int fuel = ship.fuel_level; // Esto lo coge BIEN
   int parts = ship.ship_parts;
-
-  // printf("PART: %d \n",parts );
-  // printf("FUEL: %d \n",fuel );
 
   if(ship.ship_parts == 2)
   {
@@ -432,20 +426,67 @@ void DropFuel(){
   }
 }
 
-void DropCargo(){
-  if((*(str_pieces + 2)).is_attached && str_player.posx > 490 && str_player.posx < 510 )
+void PieceFall()
+{
+  for(int i=1;i<=2;i++)
   {
-    str_player.can_grab = false;
-    (*(str_pieces + 2)).is_attached = false;
-    (*(str_pieces + 2)).just_dropped = true;
-  }
-  if((*(str_pieces + 1)).is_attached && str_player.posx > 490 && str_player.posx < 510 )
-  {
-    str_player.can_grab = false;
-    (*(str_pieces + 1)).is_attached = false;
-    (*(str_pieces + 1)).just_dropped = true;
+    if((*(str_pieces + i)).falling)
+    {
+      (*(str_pieces + i)).posy += 2;
+
+    }
+
+    for ( int j=0; j<4; j++){
+
+      if ( ( (*(str_pieces + i)).posx > (*(str_mapa + j)).posx && fuel.pos.x < (*(str_mapa + j)).posx + esat::SpriteWidth( (*(str_mapa + j)).platform_sprites) &&
+           (  (*(str_pieces + i)).posy + 36) >= ((*(str_mapa +j)).posy -1) &&
+           (  (*(str_pieces + i)).posy + 36) <= ((*(str_mapa +j)).posy +1) ) ||
+           ( ((*(str_pieces + i)).posx + 36) > (*(str_mapa + j)).posx &&
+           ((*(str_pieces + i)).posx + 36) < (*(str_mapa + j)).posx + esat::SpriteWidth( (*(str_mapa + j)).platform_sprites) &&
+           (  (*(str_pieces + i)).posy + 36) >= ((*(str_mapa +j)).posy - 1) &&
+           (  (*(str_pieces + i)).posy + 36) <= ((*(str_mapa +j)).posy + 1)) )
+      {
+        (*(str_pieces + i)).falling = false;
+      }
+    }
+/*
+    // MAPA BASE
+    if  ( ((*(str_pieces + i)).posy + 36 ) >= (*str_mapa).posy ) {
+        (*(str_pieces + i)).falling = false;
+    }
+
+    // PLAT IZQUIERDA
+    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 1)).posy
+    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 1)).posx)
+    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 1)).posx + esat::SpriteWidth( (*(str_mapa + 1)).platform_sprites) ) ) )
+    {
+      printf("IZQ \n");
+      (*(str_pieces + i)).falling = false;
+    }
+
+    // PLAT CENTRO
+    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 2)).posy
+    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 2)).posx)
+    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 2)).posx + esat::SpriteWidth( (*(str_mapa + 2)).platform_sprites) ) ) )
+    {
+      printf("CEN \n");
+      (*(str_pieces + i)).falling = false;
+    }
+
+  // PLAT DERECHA
+    else if ( ((*(str_pieces + i)).posy + 36) >= (*(str_mapa + 3)).posy
+    && ( ( ( (*(str_pieces + i)).posx + 36 ) >=  (*(str_mapa + 3)).posx)
+    && ( ( (*(str_pieces + i)).posx ) <= (*(str_mapa + 3)).posx + esat::SpriteWidth( (*(str_mapa + 3)).platform_sprites) ) ) )
+    {
+      printf("DER \n");
+      (*(str_pieces + i)).falling = false;
+    } */
   }
 
+}
+
+void JustDropped()
+{
   if( (*(str_pieces + 2)).just_dropped)
   {
     (*(str_pieces + 2)).posx = 500;
@@ -474,24 +515,60 @@ void DropCargo(){
   }
 }
 
+void DropCargo(){
+
+  if((*(str_pieces + 2)).is_attached && str_player.posx > 490 && str_player.posx < 510 )
+  {
+    str_player.can_grab = false;
+    (*(str_pieces + 2)).is_attached = false;
+    (*(str_pieces + 2)).just_dropped = true;
+  }
+  if((*(str_pieces + 1)).is_attached && str_player.posx > 490 && str_player.posx < 510 )
+  {
+    str_player.can_grab = false;
+    (*(str_pieces + 1)).is_attached = false;
+    (*(str_pieces + 1)).just_dropped = true;
+  }
+
+  if((*(str_pieces + 1)).is_attached && reset && (*(str_pieces + 1)).just_dropped == false)
+  {
+    str_player.can_grab = false;
+    (*(str_pieces + 1)).is_attached = false;
+    (*(str_pieces + 1)).falling = true;
+  }
+
+  if((*(str_pieces + 2)).is_attached && reset && (*(str_pieces + 2)).just_dropped == false)
+  {
+    str_player.can_grab = false;
+    (*(str_pieces + 2)).is_attached = false;
+    (*(str_pieces + 2)).falling = true;
+  }
+
+  JustDropped();
+  PieceFall();
+}
+
 void InitializePieces(){
     (*str_pieces).posx = 500;
     (*str_pieces).posy = 519;
     (*str_pieces).is_visible = true;
     (*str_pieces).is_attached=false;
     (*str_pieces).just_dropped=false;
+    (*str_pieces).falling=true;
 
     (*(str_pieces + 1)).posx = 150;
-    (*(str_pieces + 1)).posy = 184;
+    (*(str_pieces + 1)).posy = 182;
     (*(str_pieces + 1)).is_visible = true;
     (*(str_pieces + 1)).is_attached=false;
     (*(str_pieces + 1)).just_dropped=false;
+    (*(str_pieces + 1)).falling=true;
 
     (*(str_pieces + 2)).posx = 390;
-    (*(str_pieces + 2)).posy = 256;
+    (*(str_pieces + 2)).posy = 254;
     (*(str_pieces + 2)).is_visible = true;
     (*(str_pieces + 2)).is_attached=false;
     (*(str_pieces + 2)).just_dropped=false;
+    (*(str_pieces + 2)).falling=true;
 }
 
 void InitializeShip(){
@@ -556,8 +633,6 @@ void LevelControl()
     InitializeShip();
     PlayerInit();
     InicializarEnemyLevel();
-    // 4- Inicializamos bonus, enemigos, piezas/nave y jugador (en ese orden)
-
   }
 }
 
