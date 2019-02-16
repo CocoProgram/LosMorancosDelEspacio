@@ -14,6 +14,35 @@ bool CollisionBalaTerreno(TShoot shoot){
   return false;
 }
 
+bool CollisionBalaObjetos(TShoot shoot){
+
+    if (str_bonus.is_alive && shoot.posx > str_bonus.posx && shoot.posx < str_bonus.posx + esat::SpriteWidth( str_bonus.bonus_sprite )
+    && shoot.posy >= str_bonus.posy && shoot.posy <= str_bonus.posy + esat::SpriteHeight(str_bonus.bonus_sprite)) {
+      return true;
+    }
+  return false;
+}
+
+bool CollisionBalaFuel(TShoot shoot){
+
+    if (fuel.is_active && !fuel.is_attached && shoot.posx > fuel.pos.x && shoot.posx < fuel.pos.x + esat::SpriteWidth( s_fuel )
+    && shoot.posy >= fuel.pos.y && shoot.posy <= fuel.pos.y + esat::SpriteHeight(s_fuel)) {
+      return true;
+    }
+  return false;
+}
+
+bool CollisionBalaPiezas(TShoot shoot){
+
+  for(int i=1;i<3;++i){
+    if (!(str_pieces+i)->is_attached && shoot.posx > (str_pieces+i)->posx && shoot.posx < (str_pieces+i)->posx + 36
+    && shoot.posy >= (str_pieces+i)->posy && shoot.posy <= (str_pieces+i)->posy + 36) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void PlasmaLasers(TPlayer *player){
 
   bool  found=false;
@@ -41,7 +70,6 @@ void PlasmaLasers(TPlayer *player){
         found=true;
       }
     }
-
   }
 }
 
@@ -135,9 +163,26 @@ void LaserMovement(TPlayer *player){
       }
     }
 
-    if(CollisionBullet(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
-      str_shoot->collision=true;
+    if(CollisionBalaTerreno(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      (str_shoot+i)->collision=true;
     }
+
+    if(CollisionBullet(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      (str_shoot+i)->collision=true;
+    }
+
+    if(CollisionBalaObjetos(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      (str_shoot+i)->collision=true;
+    }
+
+    if(CollisionBalaFuel(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      (str_shoot+i)->collision=true;
+    }
+
+    if(CollisionBalaPiezas(*(str_shoot+i)) && str_shoot->shot && !str_shoot->collision){
+      (str_shoot+i)->collision=true;
+    }
+
     DrawLasers(i);
   }
 }
