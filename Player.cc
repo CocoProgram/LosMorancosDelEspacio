@@ -1,4 +1,5 @@
 #include "colicionplayerenemy.cc"
+#include "fuel.cc"
 
 const int laser_quantity = 10;
 int contadorMuerte = 0;
