@@ -40,7 +40,13 @@ void MovimientoOvni(TEnemy *Ovni, TPlayer player){
 		if((*(Ovni)).seg_counter < 1){
 			
 			(*(Ovni)).posx += (*(Ovni)).speedx;
+			if(CollisionEnemy((*(Ovni)))){
+				(*(Ovni)).posx -= (*(Ovni)).speedx;
+			}
 			(*(Ovni)).posy += (*(Ovni)).speedy;
+			if(CollisionEnemy((*(Ovni)))){
+				(*(Ovni)).posy -= (*(Ovni)).speedy;
+			}
 			
 		}else{
 		
@@ -123,7 +129,13 @@ void MovimientoOvni(TEnemy *Ovni, TPlayer player){
 		if((*(Ovni)).seg_counter < 1){
 			
 			(*(Ovni)).posx += (*(Ovni)).speedx;
+			if(CollisionEnemy((*(Ovni)))){
+				(*(Ovni)).posx -= (*(Ovni)).speedx;
+			}
 			(*(Ovni)).posy += (*(Ovni)).speedy;
+			if(CollisionEnemy((*(Ovni)))){
+				(*(Ovni)).posy -= (*(Ovni)).speedy;
+			}
 			
 		}else if((*(Ovni)).seg_counter < 10){
 			

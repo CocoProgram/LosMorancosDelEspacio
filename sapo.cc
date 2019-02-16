@@ -40,7 +40,13 @@ void MovimientoSapo(TEnemy *sapo, TPlayer player){
 		if((*(sapo)).seg_counter < 1){
 			
 			(*(sapo)).posx += (*(sapo)).speedx;
+			if(CollisionEnemy((*(sapo)))){
+				(*(sapo)).posx -= (*(sapo)).speedx;
+			}
 			(*(sapo)).posy += (*(sapo)).speedy;
+			if(CollisionEnemy((*(sapo)))){
+				(*(sapo)).posy -= (*(sapo)).speedy;
+			}
 			
 		}else{
 		
@@ -123,7 +129,13 @@ void MovimientoSapo(TEnemy *sapo, TPlayer player){
 		if((*(sapo)).seg_counter < 1){
 			
 			(*(sapo)).posx += (*(sapo)).speedx;
+			if(CollisionEnemy((*(sapo)))){
+				(*(sapo)).posx -= (*(sapo)).speedx;
+			}
 			(*(sapo)).posy += (*(sapo)).speedy;
+			if(CollisionEnemy((*(sapo)))){
+				(*(sapo)).posy -= (*(sapo)).speedy;
+			}
 			
 		}else if((*(sapo)).seg_counter < 10){
 			
