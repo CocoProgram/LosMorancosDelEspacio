@@ -1,5 +1,4 @@
 //x = 500, centro de la nave
-
 esat::SpriteHandle s_fuel;
 
 void LoadFuelSprite(){
@@ -60,46 +59,47 @@ void FuelMovement(){
     fuel.pos.y = fuel.pos.y + fuel.f_gravity;
   }
 }
-/*
-void FuelColisionsWPlayer(){
-  //izquierda:
-  if ( (str_player.posy > fuel.pos.y && (str_player.posy + esat::SpriteHeight( *(str_player.player_sprites) ) ) &&
-       (str_player.posx + esat::SpriteWidth(*(str_player.player_sprites) ) )  >= fuel.pos.x &&
-       (str_player.posx + esat::SpriteWidth(*(str_player.player_sprites) ) )  <= (fuel.pos.x + 1 ) )|| (
-       ((str_player.posy + esat::SpriteHeight( *(str_player.player_sprites) )) > fuel.pos.y &&
-       (str_player.posy + esat::SpriteHeight( *(str_player.player_sprites) )) > (fuel.pos.y + esat::SpriteHeight(s_fuel)) &&
-       (str_player.posx + esat::SpriteWidth( *(str_player.player_sprites) ) )  >= fuel.pos.x) &&
-        (str_player.posx + esat::SpriteWidth( *(str_player.player_sprites) ) ) <= (fuel.pos.x +1)) )
+
+void DropFuelToFloor(){
+  if(fuel.is_attached && CollisionPlayerEnemy(str_player)==true )
   {
-    fuel.player_colision = true;
-  }
-  if ( fuel.player_colision ){
-    fuel.map_colision = false;
-    fuel.pos.x = str_player.posx;
     fuel.pos.y = str_player.posy;
-    while (fuel.ship_colision) {
-      fuel.player_colision = false;
+    str_player.can_grab = false;
+    fuel.is_attached = false;
+    fuel.just_dropped = false;
+    fuel.enemy_colision = true;
+    
+  }else { fuel.enemy_colision = false; }
+
+  if(fuel.enemy_colision)
+  {
+    FuelMovement();
+    fuel.pos.x = str_player.posx;
+    //fuel.pos.y += 2;
+
+  }
+}
+
+void FuelFallAfterPlayerDies(){
+  if( fuel.is_attached && CollisionPlayerEnemy(str_player)==true ){
+    if((*str_nave).ship_parts == 3 && (*str_nave).fuel_level < 6 && loadingLevel == false )
+    {
+      fuel.pos.x = str_player.posx;
+      fuel.pos.y = str_player.posy;
+      fuel.map_colision = false;
+      fuel.is_active = true;
+      fuel.is_attached = false;
+      fuel.just_dropped = false;
     }
   }
 }
-void FuelDown(){
-  if (fuel.map_colision) {
-    fuel.pos.y = fuel.pos.y + fuel.f_gravity;
-  }
-}
-void FuelColisionWShip(){
-  if ( fuel.pos.x + (esat::SpriteWidth(s_fuel)/2) >= (500 -2) && fuel.pos.x + (esat::SpriteWidth(s_fuel)/2) <= (500 +2)  ) {
-    fuel.player_colision = false;
-    FuelDown();
-  }
-}
-*/
 
 void Fuel(){
 
     if (!fuel.is_active && fuel.f_counter > 0){
       InitFuelPosition();
     }
+    DropFuelToFloor();
     DrawFuel();
     FuelColisionWMap();
     FuelMovement();
@@ -110,3 +110,4 @@ void Fuel(){
       fuel.f_counter--;
     }
 }
+
