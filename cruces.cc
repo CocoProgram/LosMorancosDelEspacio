@@ -6,19 +6,13 @@
 void InicializarCruz(TEnemy *cruz, esat::SpriteHandle *sprite) {
 	
 	(*sprite) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_azul.png");
-	(*(sprite+1)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_lila.png");
-	(*(sprite+2)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_verde.png");
-	(*(sprite+3)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_rojo.png");
+	(*(sprite+2)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_lila.png");
+	(*(sprite+4)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_verde.png");
+	(*(sprite+6)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_rojo.png");
 	
 	for(int i = 0 ; i < g_num_enemy ; i++){
 		
-		(*(cruz+i)).enemy_sprites = sprite+i;
-		(*(cruz+i)).is_alive = true;
-		(*(cruz+i)).posx = (kWindowX*(rand()%2));
-		(*(cruz+i)).posy = rand()%kWindowY;
-		if((*(cruz+i)).posy > 554){
-			(*(cruz+i)).posy -= 30;
-		}
+		AsignacionEnemy(cruz, sprite, i);
 		if(rand()%2 == 0){
 			(*(cruz+i)).speedx = 2;
 		}else{
@@ -26,42 +20,9 @@ void InicializarCruz(TEnemy *cruz, esat::SpriteHandle *sprite) {
 		}
 		(*(cruz+i)).speedy = 2;
 		(*(cruz+i)).points = 60;
-		(*(cruz+i)).colour = i;
-		(*(cruz+i)).phase_animation = 0;
-		(*(cruz+i)).seg_counter = 0;
+		
 		
 	}
-	
-}
-
-void ReInicializarCruz(TEnemy *cruz, esat::SpriteHandle *sprite, int i) {
-	
-	(*sprite) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_azul.png");
-	(*(sprite+1)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_lila.png");
-	(*(sprite+2)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_verde.png");
-	(*(sprite+3)) = esat::SpriteFromFile("./resources/Sprites/Enemigo_6_rojo.png");
-	
-	
-		
-	(*(cruz)).enemy_sprites = sprite+i;
-	(*(cruz)).is_alive = true;
-	(*(cruz)).posx = (kWindowX*(rand()%2));
-	(*(cruz)).posy = rand()%kWindowY;
-	if((*(cruz)).posy > 554){
-		(*(cruz)).posy -= 30;
-	}
-	if(rand()%2 == 0){
-		(*(cruz)).speedx = 2;
-	}else{
-		(*(cruz)).speedx = -2;
-	}
-	(*(cruz)).speedy = 2;
-	(*(cruz)).points = 60;
-	(*(cruz)).colour = i;
-	(*(cruz)).phase_animation = 0;
-	(*(cruz)).seg_counter = 0;
-		
-	
 	
 }
 
@@ -94,7 +55,7 @@ void MovimientoCruz(TEnemy *cruz) {
 			(*(cruz)).speedy = -2;
 		}
 		
-		
+		//(*(cruz)).seg_counter++;
 		
 	}
 	
@@ -109,20 +70,20 @@ void MovimientoCruz(TEnemy *cruz) {
 	
 	
 	
+	//esat::SpriteWidth((*(cruz)))
+	//esat::SpriteHeight((*(cruz)))
 	
+		 
+		 
 	//Direccion: Abajo Derecha
 	if(CollisionEnemy((*(cruz))) && (*(cruz)).speedx == 2 && (*(cruz)).speedy > 0){
 		//Zona izquierda
-		if((*(cruz)).posx+45 > 98  && (*(cruz)).posx < 98  || 
-		   (*(cruz)).posx+45 > 363 && (*(cruz)).posx < 363 || 
-		   (*(cruz)).posx+45 > 580 && (*(cruz)).posx < 580){
-			
+		if((*(cruz)).posx+45 > 98 && (*(cruz)).posx < 98 || (*(cruz)).posx+45 > 363 && (*(cruz)).posx < 363 || (*(cruz)).posx+45 > 580 && (*(cruz)).posx < 580){
 			(*(cruz)).speedx = -2;
 		}
 		//Zona arriba
-		if((*(cruz)).posy+45 > 219 && (*(cruz)).posy < 219 || 
-		   (*(cruz)).posy+45 > 292 && (*(cruz)).posy < 292 || 
-		   (*(cruz)).posy+45 > 147 && (*(cruz)).posy < 147){
+		if((*(cruz)).posy+45 > 219 && (*(cruz)).posy < 219 || (*(cruz)).posy+45 > 292 && (*(cruz)).posy < 292 || (*(cruz)).posy+45 > 147 && (*(cruz)).posy < 147){
+			
 			
 			(*(cruz)).speedy = -1*rand()%3;
 			if((*(cruz)).speedy == 0){
@@ -136,16 +97,12 @@ void MovimientoCruz(TEnemy *cruz) {
 	//Direccion: Arriba Izquierda
 	if(CollisionEnemy((*(cruz))) && (*(cruz)).speedx == -2 && (*(cruz)).speedy < 0){
 		//Zona derecha
-		if((*(cruz)).posx < 98+137  && (*(cruz)).posx+45  > 98+137 || 
-		   (*(cruz)).posx < 363+90  && (*(cruz)).posx+45  > 363+90 || 
-		   (*(cruz)).posx < 580+144 && (*(cruz)).posx+45 > 580+144){
-			
+		if((*(cruz)).posx < 98+137 && (*(cruz)).posx+45 > 98+137 || (*(cruz)).posx < 363+90 && (*(cruz)).posx+45 > 363+90 || (*(cruz)).posx < 580+144 && (*(cruz)).posx+45 > 580+144){
 			(*(cruz)).speedx = 2;
 		}
 		//Zona abajo
-		if((*(cruz)).posy < 219+18 && (*(cruz)).posy+45 > 219+18 || 
-		   (*(cruz)).posy < 292+18 && (*(cruz)).posy+45 > 292+18 || 
-		   (*(cruz)).posy < 147+18 && (*(cruz)).posy+45 > 147+18){
+		if((*(cruz)).posy < 219+18 && (*(cruz)).posy+45 > 219+18 || (*(cruz)).posy < 292+18 && (*(cruz)).posy+45 > 292+18 || (*(cruz)).posy < 147+18 && (*(cruz)).posy+45 > 147+18){
+			
 			
 			(*(cruz)).speedy = 1*rand()%3;
 			if((*(cruz)).speedy == 0){
@@ -157,16 +114,12 @@ void MovimientoCruz(TEnemy *cruz) {
 	//Direccion: Abajo Izquierda
 	if(CollisionEnemy((*(cruz))) && (*(cruz)).speedx == -2 && (*(cruz)).speedy > 0){
 		//Zona derecha
-		if((*(cruz)).posx < 98+137  && (*(cruz)).posx+45 > 98+137  || 
-		   (*(cruz)).posx < 363+90  && (*(cruz)).posx+45 > 363+90  || 
-		   (*(cruz)).posx < 580+144 && (*(cruz)).posx+45 > 580+144){
-			
+		if((*(cruz)).posx < 98+137 && (*(cruz)).posx+45 > 98+137 || (*(cruz)).posx < 363+90 && (*(cruz)).posx+45 > 363+90 || (*(cruz)).posx < 580+144 && (*(cruz)).posx+45 > 580+144){
 			(*(cruz)).speedx = 2;
 		}
 		//Zona arriba
-		if((*(cruz)).posy+45 > 219 && (*(cruz)).posy < 219 || 
-		   (*(cruz)).posy+45 > 292 && (*(cruz)).posy < 292 || 
-		   (*(cruz)).posy+45 > 147 && (*(cruz)).posy < 147){
+		if((*(cruz)).posy+45 > 219 && (*(cruz)).posy < 219 || (*(cruz)).posy+45 > 292 && (*(cruz)).posy < 292 || (*(cruz)).posy+45 > 147 && (*(cruz)).posy < 147){
+			
 			
 			(*(cruz)).speedy = -1*rand()%3;
 			if((*(cruz)).speedy == 0){
@@ -180,17 +133,13 @@ void MovimientoCruz(TEnemy *cruz) {
 	//Direccion: Arriba Derecha
 	if(CollisionEnemy((*(cruz))) && (*(cruz)).speedx == 2 && (*(cruz)).speedy < 0){
 		//Zona izquierda
-		if((*(cruz)).posx+45 > 98  && (*(cruz)).posx < 98  || 
-		   (*(cruz)).posx+45 > 363 && (*(cruz)).posx < 363 || 
-		   (*(cruz)).posx+45 > 580 && (*(cruz)).posx < 580){
-			
+		if((*(cruz)).posx+45 > 98 && (*(cruz)).posx < 98 || (*(cruz)).posx+45 > 363 && (*(cruz)).posx < 363 || (*(cruz)).posx+45 > 580 && (*(cruz)).posx < 580){
 			(*(cruz)).speedx = -2;
 		}
 		//Zona abajo
-		if((*(cruz)).posy < 219+18 && (*(cruz)).posy+45 > 219+18 || 
-		   (*(cruz)).posy < 292+18 && (*(cruz)).posy+45 > 292+18 || 
-		   (*(cruz)).posy < 147+18 && (*(cruz)).posy+45 > 147+18){
-		 
+		if((*(cruz)).posy < 219+18 && (*(cruz)).posy+45 > 219+18 || (*(cruz)).posy < 292+18 && (*(cruz)).posy+45 > 292+18 || (*(cruz)).posy < 147+18 && (*(cruz)).posy+45 > 147+18){
+			
+			
 			(*(cruz)).speedy = 1*rand()%3;
 			if((*(cruz)).speedy == 0){
 				(*(cruz)).speedy = 2;
@@ -199,6 +148,16 @@ void MovimientoCruz(TEnemy *cruz) {
 		}
 	}
 	
+	
+	/*if((*(cruz)).seg_counter == 50){
+		
+		(*(cruz)).direccion = rand()%2;
+		(*(cruz)).posx = (kWindowX*(rand()%2));
+		(*(cruz)).posy = rand()%kWindowY-30;
+		
+		(*(cruz)).seg_counter = 0;
+		
+	}*/
 	
 	
 	
@@ -218,8 +177,15 @@ void controlCruces(){
 		
 			if((*(str_enemy+i)).seg_counter == fps_counter && !(*((*(str_enemy+i)).my_explo)).visible){
 			
-				ReInicializarCruz((str_enemy+i),Block_sprite_Enemy,i);
+				AsignacionEnemy(str_enemy, Block_sprite_Enemy, i);
+				if(rand()%2 == 0){
+					(*(str_enemy+i)).speedx = 2;
+				}else{
+					(*(str_enemy+i)).speedx = -2;
+				}
+				(*(str_enemy+i)).speedy = 2;
 				
+			
 			}
 		
 		}
