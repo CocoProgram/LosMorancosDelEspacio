@@ -1,6 +1,3 @@
-# URGENTE: Arreglar cruces.cc
-- En principo ya debería estar solucionado, he probado los cambios y funcionan correctamente, por favor confirmar si os funciona.
-
 # LosMorancosDelEspacio
 
 Alex & Pablo:
