@@ -1,5 +1,5 @@
 # URGENTE: Arreglar cruces.cc
-- AL MATAR A UNA CRUZ, SE INICIALIZAN TODAS (NIVEL 6, VEDLO), Y NO SÉ POR QUÉ, HACE QUE SE PARE LA NAVE SI ESTÁS SUBIDO EN ÉL.
+- En principo ya debería estar solucionado, he probado los cambios que he hecho y funcionan correctamente, por favor confirmar si os funciona.
 
 # LosMorancosDelEspacio
 
